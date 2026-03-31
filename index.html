@@ -7,258 +7,162 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#0d1117; --surface:#161b22; --surface2:#1c2333; --border:#243044;
-  --accent:#3b82f6; --green:#10b981; --amber:#f59e0b; --danger:#ef4444; --prot:#a855f7;
-  --text:#e6edf3; --muted:#7d8590; --mono:'JetBrains Mono',monospace;
+  --bg: #0d1117; --surface: #161b22; --surface2: #1c2333; --border: #243044;
+  --accent: #3b82f6; --green: #10b981; --amber: #f59e0b; --danger: #ef4444; --prot: #a855f7;
+  --text: #e6edf3; --muted: #7d8590; --mono: 'JetBrains Mono', monospace;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(59,130,246,.1),transparent);pointer-events:none;z-index:0;}
-.app{max-width:860px;margin:0 auto;padding:20px 16px;position:relative;z-index:1;}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'IBM Plex Sans Arabic', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 15px; line-height: 1.6; }
+body::before { content:''; position:fixed; inset:0; background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(59,130,246,.1), transparent); pointer-events:none; z-index:0; }
+.app { max-width: 860px; margin: 0 auto; padding: 20px 16px; position: relative; z-index: 1; }
 
-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border);}
-.logo{display:flex;align-items:center;gap:12px;}
-.logo-icon{width:42px;height:42px;background:linear-gradient(135deg,#3b82f6,#10b981);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;}
-.logo-text h1{font-size:18px;font-weight:700;}
-.logo-text span{font-size:12px;color:var(--muted);}
-.date-chip{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:13px;color:var(--muted);}
+/* HEADER */
+header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--border); }
+.logo { display:flex; align-items:center; gap:12px; }
+.logo-icon { width:42px; height:42px; background:linear-gradient(135deg,#3b82f6,#10b981); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; }
+.logo-text h1 { font-size:18px; font-weight:700; }
+.logo-text span { font-size:12px; color:var(--muted); }
+.date-chip { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:13px; color:var(--muted); }
 
-.tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:20px;overflow-x:auto;}
-.tab-btn{flex:1;min-width:64px;padding:10px 6px;background:none;border:none;border-radius:9px;color:var(--muted);cursor:pointer;font-family:'IBM Plex Sans Arabic',sans-serif;font-size:12px;font-weight:500;transition:all .2s;white-space:nowrap;}
-.tab-btn.active{background:var(--accent);color:#fff;box-shadow:0 2px 12px rgba(59,130,246,.35);}
-.tab-btn:hover:not(.active){color:var(--text);background:var(--surface2);}
-.panel{display:none;}.panel.active{display:block;}
+/* TABS */
+.tabs { display:flex; gap:4px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:4px; margin-bottom:20px; }
+.tab-btn { flex:1; padding:10px 6px; background:none; border:none; border-radius:9px; color:var(--muted); cursor:pointer; font-family:'IBM Plex Sans Arabic',sans-serif; font-size:13px; font-weight:500; transition:all .2s; white-space:nowrap; }
+.tab-btn.active { background:var(--accent); color:#fff; box-shadow:0 2px 12px rgba(59,130,246,.35); }
+.tab-btn:hover:not(.active) { color:var(--text); background:var(--surface2); }
+.panel { display:none; } .panel.active { display:block; }
 
-.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;}
-.card-title{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
-.card-title .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0;}
-.divider{height:1px;background:var(--border);margin:16px 0;}
+/* CARD */
+.card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:16px; }
+.card-title { font-size:13px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.card-title .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+.divider { height:1px; background:var(--border); margin:16px 0; }
 
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
-.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-@media(max-width:640px){.g3,.g4{grid-template-columns:1fr 1fr;}}
-@media(max-width:380px){.g2,.g3,.g4{grid-template-columns:1fr;}}
+/* GRID */
+.g2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.g3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+.g4 { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+@media(max-width:640px) { .g3,.g4 { grid-template-columns:1fr 1fr; } }
+@media(max-width:380px) { .g2,.g3,.g4 { grid-template-columns:1fr; } }
 
-.field{display:flex;flex-direction:column;gap:6px;}
-label{font-size:13px;color:var(--muted);font-weight:500;}
-input,select,textarea{background:var(--surface2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:15px;padding:11px 14px;width:100%;transition:border-color .2s;}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.12);}
-select option{background:var(--surface2);}
-input::placeholder,textarea::placeholder{color:var(--muted);font-size:14px;}
-textarea{resize:vertical;min-height:70px;}
+/* FORM */
+.field { display:flex; flex-direction:column; gap:6px; }
+label { font-size:13px; color:var(--muted); font-weight:500; }
+input, select { background:var(--surface2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'IBM Plex Sans Arabic',sans-serif; font-size:15px; padding:11px 14px; width:100%; transition:border-color .2s; }
+input:focus, select:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(59,130,246,.12); }
+select option { background:var(--surface2); }
+input::placeholder { color:var(--muted); font-size:14px; }
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:11px 22px;border-radius:10px;border:none;cursor:pointer;font-family:'IBM Plex Sans Arabic',sans-serif;font-size:14px;font-weight:600;transition:all .2s;}
-.btn-primary{background:var(--accent);color:#fff;}.btn-primary:hover{background:#2563eb;box-shadow:0 4px 14px rgba(59,130,246,.4);}
-.btn-success{background:var(--green);color:#fff;}.btn-success:hover{background:#059669;}
-.btn-ghost{background:var(--surface2);color:var(--text);border:1px solid var(--border);}.btn-ghost:hover{background:var(--border);}
-.btn-danger{background:rgba(239,68,68,.15);color:var(--danger);border:1px solid rgba(239,68,68,.2);}
-.btn-purple{background:rgba(168,85,247,.15);color:var(--prot);border:1px solid rgba(168,85,247,.25);}.btn-purple:hover{background:rgba(168,85,247,.25);}
-.btn-sm{padding:7px 14px;font-size:13px;border-radius:8px;}
+/* BUTTONS */
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:7px; padding:11px 22px; border-radius:10px; border:none; cursor:pointer; font-family:'IBM Plex Sans Arabic',sans-serif; font-size:14px; font-weight:600; transition:all .2s; }
+.btn-primary { background:var(--accent); color:#fff; } .btn-primary:hover { background:#2563eb; box-shadow:0 4px 14px rgba(59,130,246,.4); }
+.btn-success { background:var(--green); color:#fff; } .btn-success:hover { background:#059669; }
+.btn-ghost { background:var(--surface2); color:var(--text); border:1px solid var(--border); } .btn-ghost:hover { background:var(--border); }
+.btn-danger { background:rgba(239,68,68,.15); color:var(--danger); border:1px solid rgba(239,68,68,.2); }
+.btn-sm { padding:7px 14px; font-size:13px; border-radius:8px; }
 
-.stat-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
-.stat-box .val{font-family:var(--mono);font-size:22px;font-weight:700;margin-bottom:4px;}
-.stat-box .lbl{font-size:12px;color:var(--muted);line-height:1.4;}
-.stat-box.blue .val{color:var(--accent);}
-.stat-box.green .val{color:var(--green);}
-.stat-box.amber .val{color:var(--amber);}
-.stat-box.purple .val{color:var(--prot);}
+/* STAT BOX */
+.stat-box { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:16px; text-align:center; }
+.stat-box .val { font-family:var(--mono); font-size:22px; font-weight:700; margin-bottom:4px; }
+.stat-box .lbl { font-size:12px; color:var(--muted); line-height:1.4; }
+.stat-box.blue .val { color:var(--accent); }
+.stat-box.green .val { color:var(--green); }
+.stat-box.amber .val { color:var(--amber); }
+.stat-box.purple .val { color:var(--prot); }
+.stat-box.red .val { color:var(--danger); }
 
-.prog-wrap{margin:10px 0;}
-.prog-label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px;}
-.prog-bar{height:10px;background:var(--surface2);border-radius:99px;overflow:hidden;}
-.prog-fill{height:100%;border-radius:99px;transition:width .5s ease;}
-.prog-fill.cal{background:linear-gradient(90deg,var(--accent),var(--green));}
-.prog-fill.prot{background:linear-gradient(90deg,var(--prot),#ec4899);}
-.prog-fill.over{background:linear-gradient(90deg,var(--amber),var(--danger));}
+/* PROGRESS */
+.prog-wrap { margin:10px 0; }
+.prog-label { display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin-bottom:6px; }
+.prog-bar { height:10px; background:var(--surface2); border-radius:99px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:99px; transition:width .5s ease; }
+.prog-fill.cal { background:linear-gradient(90deg,var(--accent),var(--green)); }
+.prog-fill.prot { background:linear-gradient(90deg,var(--prot),#ec4899); }
+.prog-fill.over { background:linear-gradient(90deg,var(--amber),var(--danger)); }
 
-/* DAY CELLS */
-.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:12px 0;}
-@media(max-width:500px){.week-grid{grid-template-columns:repeat(4,1fr);}}
-.day-cell{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 5px;text-align:center;cursor:pointer;transition:all .2s;}
-.day-cell:hover{border-color:var(--accent);}
-.day-cell.today{border-color:var(--accent);background:rgba(59,130,246,.1);}
-.day-cell.fasting{border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.06);}
-.day-cell .dn{font-size:11px;color:var(--muted);margin-bottom:5px;}
-.day-cell .dc{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--accent);}
-.day-cell .da{font-size:10px;color:var(--green);margin-top:2px;}
-.day-cell .ft{font-size:9px;color:var(--amber);background:rgba(245,158,11,.12);border-radius:4px;padding:1px 4px;margin-top:3px;display:inline-block;}
+/* WEEK GRID */
+.week-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:8px; margin:12px 0; }
+@media(max-width:500px) { .week-grid { grid-template-columns:repeat(4,1fr); } }
+.day-cell { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:10px 5px; text-align:center; cursor:pointer; transition:all .2s; }
+.day-cell:hover { border-color:var(--accent); }
+.day-cell.today { border-color:var(--accent); background:rgba(59,130,246,.1); }
+.day-cell.fasting { border-color:rgba(245,158,11,.5); background:rgba(245,158,11,.06); }
+.day-cell .dn { font-size:11px; color:var(--muted); margin-bottom:5px; }
+.day-cell .dc { font-family:var(--mono); font-size:12px; font-weight:700; color:var(--accent); }
+.day-cell .dp { font-size:10px; color:var(--prot); margin-top:3px; }
+.day-cell .da { font-size:10px; color:var(--green); margin-top:2px; }
+.day-cell .ft { font-size:9px; color:var(--amber); background:rgba(245,158,11,.12); border-radius:4px; padding:1px 4px; margin-top:3px; display:inline-block; }
 
-/* MEAL ROWS */
-.meal-row{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;}
-.meal-info{flex:1;min-width:0;}
-.meal-nm{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.meal-sub{font-size:12px;color:var(--muted);margin-top:2px;}
-.meal-cal-badge{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap;}
+/* MEAL LIST */
+.meal-row { display:flex; align-items:center; gap:10px; padding:11px 14px; background:var(--surface2); border:1px solid var(--border); border-radius:10px; margin-bottom:8px; }
+.meal-info { flex:1; min-width:0; }
+.meal-nm { font-size:14px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.meal-sub { font-size:12px; color:var(--muted); margin-top:2px; }
+.meal-cal-badge { font-family:var(--mono); font-size:13px; font-weight:700; color:var(--accent); white-space:nowrap; }
+.meal-prot-badge { font-family:var(--mono); font-size:12px; color:var(--prot); white-space:nowrap; }
 
 /* PROT BANNER */
-.prot-banner{background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);border-radius:12px;padding:16px;margin-bottom:16px;}
-.prot-banner .pb-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px;}
-.prot-banner .pb-val{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--prot);}
-
-/* PLANNED MEAL CARD per day */
-.planned-meal-card{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:12px 14px;margin-bottom:12px;}
-.planned-meal-card .pm-label{font-size:11px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
-.planned-meal-card .pm-name{font-size:15px;font-weight:600;margin-bottom:4px;}
-.planned-meal-card .pm-desc{font-size:13px;color:var(--muted);white-space:pre-wrap;}
-.planned-meal-card .pm-nums{font-size:12px;color:var(--muted);margin-top:6px;}
-
-/* WEEKLY MEAL PLAN grid */
-.wmp-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;}
-@media(max-width:700px){.wmp-grid{grid-template-columns:repeat(4,1fr);}}
-@media(max-width:420px){.wmp-grid{grid-template-columns:1fr 1fr;}}
-.wmp-day{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;transition:all .2s;position:relative;}
-.wmp-day:hover{border-color:var(--accent);transform:translateY(-1px);}
-.wmp-day.wmp-filled{border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.05);}
-.wmp-day.wmp-fasting{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.05);}
-.wmp-dn{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:5px;}
-.wmp-mn{font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);}
-.wmp-mn.empty{color:rgba(125,133,144,.4);}
-.wmp-cal{font-size:11px;color:var(--accent);font-family:var(--mono);margin-top:3px;}
-.wmp-edit-icon{position:absolute;top:6px;left:6px;font-size:11px;opacity:0;transition:opacity .15s;}
-.wmp-day:hover .wmp-edit-icon{opacity:.7;}
+.prot-banner { background:rgba(168,85,247,.08); border:1px solid rgba(168,85,247,.2); border-radius:12px; padding:16px; margin-bottom:16px; }
+.prot-banner .pb-row { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:10px; }
+.prot-banner .pb-val { font-family:var(--mono); font-size:28px; font-weight:700; color:var(--prot); }
+.prot-banner .pb-lbl { font-size:13px; color:var(--muted); }
 
 /* PRESET MANAGER */
-.pm-group{background:var(--surface2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:10px;}
-.pm-hdr{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;cursor:pointer;user-select:none;transition:background .2s;}
-.pm-hdr:hover{background:rgba(59,130,246,.05);}
-.pm-hdr-l{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;}
-.pm-cnt{font-size:11px;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:2px 9px;}
-.pm-arr{color:var(--muted);font-size:12px;transition:transform .2s;}
-.pm-arr.open{transform:rotate(90deg);}
-.pm-body{display:none;border-top:1px solid var(--border);}
-.pm-body.open{display:block;}
-.pm-item{display:flex;align-items:center;padding:10px 16px;border-bottom:1px solid rgba(36,48,68,.6);gap:10px;}
-.pm-item:last-of-type{border-bottom:none;}
-.pm-item:hover{background:rgba(16,185,129,.04);}
-.pm-in{flex:1;}
-.pm-nm{font-size:14px;font-weight:500;}
-.pm-sb{font-size:12px;color:var(--muted);margin-top:2px;}
-.pm-sel{padding:6px 12px;font-size:12px;border-radius:8px;border:none;background:rgba(59,130,246,.12);color:var(--accent);cursor:pointer;font-family:'IBM Plex Sans Arabic',sans-serif;font-weight:600;}
-.pm-sel:hover{background:rgba(59,130,246,.22);}
-.pm-ed{padding:6px 10px;font-size:12px;border-radius:8px;border:none;background:rgba(245,158,11,.1);color:var(--amber);cursor:pointer;opacity:0;transition:opacity .15s;font-family:'IBM Plex Sans Arabic',sans-serif;}
-.pm-item:hover .pm-ed{opacity:1;}
-.pm-dl{padding:6px 10px;font-size:12px;border-radius:8px;border:none;background:rgba(239,68,68,.1);color:var(--danger);cursor:pointer;opacity:0;transition:opacity .15s;font-family:'IBM Plex Sans Arabic',sans-serif;}
-.pm-item:hover .pm-dl{opacity:1;}
-.pm-add-row{padding:14px 16px;border-top:1px solid var(--border);background:rgba(0,0,0,.1);}
-.ing-row{display:grid;grid-template-columns:1fr 80px 60px 60px;gap:6px;align-items:center;padding:7px 0;border-bottom:1px solid rgba(36,48,68,.5);}
-.ing-row:last-child{border-bottom:none;}
-.ing-name{font-size:13px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.ing-qty{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:14px;padding:7px 8px;width:100%;text-align:center;}
-.ing-qty:focus{outline:none;border-color:var(--accent);}
-.ing-cal{font-size:11px;color:var(--accent);font-family:var(--mono);text-align:center;}
-.ing-prot{font-size:11px;color:var(--prot);font-family:var(--mono);text-align:center;}
-.pm-add-g{display:grid;grid-template-columns:70px 1fr 80px 80px auto;gap:8px;align-items:end;}
-@media(max-width:540px){.ing-row{display:grid;grid-template-columns:1fr 80px 60px 60px;gap:6px;align-items:center;padding:7px 0;border-bottom:1px solid rgba(36,48,68,.5);}
-.ing-row:last-child{border-bottom:none;}
-.ing-name{font-size:13px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.ing-qty{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:14px;padding:7px 8px;width:100%;text-align:center;}
-.ing-qty:focus{outline:none;border-color:var(--accent);}
-.ing-cal{font-size:11px;color:var(--accent);font-family:var(--mono);text-align:center;}
-.ing-prot{font-size:11px;color:var(--prot);font-family:var(--mono);text-align:center;}
-.pm-add-g{grid-template-columns:1fr 1fr;}}
-.pm-grp-del{padding:5px 10px;font-size:11px;border-radius:7px;border:none;background:rgba(239,68,68,.1);color:var(--danger);cursor:pointer;opacity:0;transition:opacity .15s;font-family:'IBM Plex Sans Arabic',sans-serif;}
-.pm-hdr:hover .pm-grp-del{opacity:1;}
+.pm-group { background:var(--surface2); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:10px; }
+.pm-hdr { display:flex; align-items:center; justify-content:space-between; padding:13px 16px; cursor:pointer; user-select:none; transition:background .2s; }
+.pm-hdr:hover { background:rgba(59,130,246,.05); }
+.pm-hdr-l { display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600; }
+.pm-cnt { font-size:11px; color:var(--muted); background:var(--surface); border:1px solid var(--border); border-radius:99px; padding:2px 9px; }
+.pm-arr { color:var(--muted); font-size:12px; transition:transform .2s; }
+.pm-arr.open { transform:rotate(90deg); }
+.pm-body { display:none; border-top:1px solid var(--border); }
+.pm-body.open { display:block; }
+.pm-item { display:flex; align-items:center; padding:10px 16px; border-bottom:1px solid rgba(36,48,68,.6); gap:10px; }
+.pm-item:last-of-type { border-bottom:none; }
+.pm-item:hover { background:rgba(16,185,129,.04); }
+.pm-in { flex:1; }
+.pm-nm { font-size:14px; font-weight:500; }
+.pm-sb { font-size:12px; color:var(--muted); margin-top:2px; }
+.pm-sel { padding:6px 12px; font-size:12px; border-radius:8px; border:none; background:rgba(59,130,246,.12); color:var(--accent); cursor:pointer; font-family:'IBM Plex Sans Arabic',sans-serif; font-weight:600; }
+.pm-sel:hover { background:rgba(59,130,246,.22); }
+.pm-dl { padding:6px 10px; font-size:12px; border-radius:8px; border:none; background:rgba(239,68,68,.1); color:var(--danger); cursor:pointer; opacity:0; transition:opacity .15s; font-family:'IBM Plex Sans Arabic',sans-serif; }
+.pm-item:hover .pm-dl { opacity:1; }
+.pm-add-row { padding:14px 16px; border-top:1px solid var(--border); background:rgba(0,0,0,.1); }
+.pm-add-g { display:grid; grid-template-columns:1fr 90px 90px auto; gap:8px; align-items:end; }
+@media(max-width:540px) { .pm-add-g { grid-template-columns:1fr 1fr; } }
+.pm-grp-del { padding:5px 10px; font-size:11px; border-radius:7px; border:none; background:rgba(239,68,68,.1); color:var(--danger); cursor:pointer; opacity:0; transition:opacity .15s; font-family:'IBM Plex Sans Arabic',sans-serif; }
+.pm-hdr:hover .pm-grp-del { opacity:1; }
 
-.dd-wrap{position:relative;}
-.dd-wrap select{appearance:none;-webkit-appearance:none;padding-left:36px;cursor:pointer;}
-.dd-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;}
+/* DROPDOWN */
+.dd-wrap { position:relative; }
+.dd-wrap select { appearance:none; -webkit-appearance:none; padding-left:36px; cursor:pointer; }
+.dd-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none; }
 
-/* HISTORY */
-.hist-table{width:100%;border-collapse:collapse;font-size:14px;}
-.hist-table th{text-align:right;color:var(--muted);font-weight:500;padding:9px 12px;border-bottom:1px solid var(--border);font-size:12px;}
-.hist-table td{padding:11px 12px;border-bottom:1px solid rgba(36,48,68,.5);}
-.hist-table tr:last-child td{border-bottom:none;}
-.hist-table tr:hover td{background:rgba(59,130,246,.03);}
+/* HISTORY TABLE */
+.hist-table { width:100%; border-collapse:collapse; font-size:14px; }
+.hist-table th { text-align:right; color:var(--muted); font-weight:500; padding:9px 12px; border-bottom:1px solid var(--border); font-size:12px; }
+.hist-table td { padding:11px 12px; border-bottom:1px solid rgba(36,48,68,.5); }
+.hist-table tr:last-child td { border-bottom:none; }
+.hist-table tr:hover td { background:rgba(59,130,246,.03); }
 
-.badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:600;}
-.b-green{background:rgba(16,185,129,.15);color:var(--green);}
-.b-amber{background:rgba(245,158,11,.15);color:var(--amber);}
-.b-red{background:rgba(239,68,68,.15);color:var(--danger);}
+/* BADGE */
+.badge { display:inline-block; padding:3px 10px; border-radius:99px; font-size:12px; font-weight:600; }
+.b-green { background:rgba(16,185,129,.15); color:var(--green); }
+.b-amber { background:rgba(245,158,11,.15); color:var(--amber); }
+.b-red { background:rgba(239,68,68,.15); color:var(--danger); }
 
-.mini-chart{height:80px;display:flex;align-items:flex-end;gap:4px;}
-.bc-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
-.bc-outer{width:100%;background:var(--surface2);border-radius:4px;height:60px;display:flex;align-items:flex-end;overflow:hidden;}
-.bc-inner{width:100%;border-radius:4px;background:var(--accent);opacity:.7;}
-.bc-lbl{font-size:9px;color:var(--muted);}
+/* MINI CHART */
+.mini-chart { height:80px; display:flex; align-items:flex-end; gap:4px; }
+.bc-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; }
+.bc-outer { width:100%; background:var(--surface2); border-radius:4px; height:60px; display:flex; align-items:flex-end; overflow:hidden; }
+.bc-inner { width:100%; border-radius:4px; background:var(--accent); opacity:.7; }
+.bc-lbl { font-size:9px; color:var(--muted); }
 
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface2);border:1px solid var(--border);padding:12px 22px;border-radius:10px;font-size:14px;z-index:1000;transition:transform .3s;box-shadow:0 8px 30px rgba(0,0,0,.5);}
-.toast.show{transform:translateX(-50%) translateY(0);}
+/* TOAST */
+.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--surface2); border:1px solid var(--border); padding:12px 22px; border-radius:10px; font-size:14px; z-index:999; transition:transform .3s; box-shadow:0 8px 30px rgba(0,0,0,.5); }
+.toast.show { transform:translateX(-50%) translateY(0); }
 
-/* ── PRINT STYLES ── */
-@media print {
-  body { background:#fff; color:#000; font-size:12px; }
-  body::before { display:none; }
-  .app, .no-print { display:none !important; }
-  #printPage { display:block !important; }
-  #printPage { font-family:'IBM Plex Sans Arabic',Arial,sans-serif; direction:rtl; padding:20px; }
-  .print-header { text-align:center; margin-bottom:20px; border-bottom:2px solid #333; padding-bottom:12px; }
-  .print-header h2 { font-size:18px; margin-bottom:4px; }
-  .print-header p { color:#555; font-size:12px; }
-  .print-table { width:100%; border-collapse:collapse; }
-  .print-table th { background:#f0f0f0; border:1px solid #ccc; padding:8px 10px; font-size:12px; }
-  .print-table td { border:1px solid #ddd; padding:8px 10px; vertical-align:top; font-size:12px; }
-  .print-table tr.fasting-row td { background:#fffbe6; color:#888; }
-  .print-footer { margin-top:16px; font-size:11px; color:#888; text-align:center; }
-}
-#printPage { display:none; }
-
-/* ── WEEKLY OVERVIEW ── */
-.wo-cell{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .2s;position:relative;min-width:0;}
-.wo-cell:hover{border-color:var(--accent);transform:translateY(-1px);}
-.wo-cell.wo-active{border-color:var(--accent);background:rgba(59,130,246,.13);}
-.wo-cell.wo-fasting{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.05);}
-.wo-cell.wo-over{border-color:rgba(239,68,68,.45);background:rgba(239,68,68,.06);}
-.wo-cell.wo-done{border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.05);}
-.wo-cell.wo-future{opacity:.45;}
-.wo-dn{font-size:10px;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-.01em;}
-.wo-planned{font-family:var(--mono);font-size:11px;color:var(--muted);}
-.wo-actual{font-family:var(--mono);font-size:13px;font-weight:700;margin-top:2px;}
-.wo-rem{font-size:10px;margin-top:2px;font-weight:600;}
-.wo-ft{font-size:9px;color:var(--amber);background:rgba(245,158,11,.15);border-radius:4px;padding:1px 4px;margin-top:3px;display:inline-block;}
-@media(max-width:560px){#woGrid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}}
+.mini-chart { height:80px; display:flex; align-items:flex-end; gap:4px; }
 </style>
-
-<!-- Firebase REST API — no SDK needed -->
-<script>
-const FB_URL = 'https://prodiet-6aa8c-default-rtdb.firebaseio.com/prodiet';
-
-// Save to Firebase via REST
-window._fbSave = async function(data) {
-  try {
-    await fetch(FB_URL + '.json', {
-      method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(data)
-    });
-  } catch(e) { console.log('Firebase save error:', e); }
-};
-
-// Load from Firebase via REST
-window._fbLoad = async function() {
-  try {
-    const r = await fetch(FB_URL + '.json');
-    return await r.json();
-  } catch(e) { console.log('Firebase load error:', e); return null; }
-};
-
-// Poll for changes every 10 seconds
-window._fbStartSync = function(onChange) {
-  let lastHash = '';
-  const poll = async () => {
-    const data = await window._fbLoad();
-    if(data) {
-      const hash = JSON.stringify({w:(data.weeks||[]).length, d:Object.keys(data.days||{}).length});
-      if(hash !== lastHash) {
-        lastHash = hash;
-        onChange(data);
-      }
-    }
-  };
-  poll(); // immediate first load
-  setInterval(poll, 10000); // then every 10 seconds
-};
-</script>
 </head>
 <body>
 <div class="app">
@@ -273,13 +177,13 @@ window._fbStartSync = function(onChange) {
 
 <div class="tabs">
   <button class="tab-btn active" onclick="switchTab('plan')">📋 التخطيط</button>
-  <button class="tab-btn" onclick="switchTab('log')">✏️ التسجيل اليومي</button>
+  <button class="tab-btn" onclick="switchTab('log')">✏️ تسجيل اليوم</button>
   <button class="tab-btn" onclick="switchTab('meals')">🍽️ الوجبات</button>
-  <button class="tab-btn" onclick="switchTab('stats')">📊 إحصاءات</button>
+  <button class="tab-btn" onclick="switchTab('stats')">📊 الإحصاءات</button>
   <button class="tab-btn" onclick="switchTab('history')">📅 السجل</button>
 </div>
 
-<!-- ══════════ PLAN ══════════ -->
+<!-- ═══════════════════ PLAN ═══════════════════ -->
 <div class="panel active" id="panel-plan">
   <div class="card">
     <div class="card-title"><span class="dot"></span>إعداد أسبوع جديد</div>
@@ -299,6 +203,7 @@ window._fbStartSync = function(onChange) {
       </div>
       <div class="field"><label>➖ الخصم الأسبوعي (سعرة)</label><input type="number" id="weekDeficit" placeholder="مثال: 7000" step="100"></div>
     </div>
+
     <div class="divider"></div>
     <div class="card-title" style="margin-bottom:12px;"><span class="dot" style="background:var(--prot)"></span>هدف البروتين الأسبوعي</div>
     <div class="g3" style="margin-bottom:14px;">
@@ -311,12 +216,13 @@ window._fbStartSync = function(onChange) {
           <option value="custom">مخصص</option>
         </select>
       </div>
-      <div class="field"><label>🎯 أو أدخل هدف يدوي (جم/أسبوع)</label><input type="number" id="protCustom" placeholder="مثال: 700"></div>
+      <div class="field"><label>🎯 أو أدخل هدف يدوي (جم/أسبوع)</label><input type="number" id="protCustom" placeholder="مثال: 700" id="protCustom"></div>
       <div class="stat-box purple" style="align-self:end;">
         <div class="val" id="r_prot_weekly">—</div>
         <div class="lbl">هدف البروتين / أسبوع (جم)</div>
       </div>
     </div>
+
     <button class="btn btn-primary" onclick="calcWeekly()">⚡ احسب وعرض التوزيع</button>
   </div>
 
@@ -325,12 +231,10 @@ window._fbStartSync = function(onChange) {
       <div class="stat-box blue"><div class="val" id="r_maint">—</div><div class="lbl">ثبات / يوم</div></div>
       <div class="stat-box amber"><div class="val" id="r_wbudget">—</div><div class="lbl">ميزانية أسبوع</div></div>
       <div class="stat-box green"><div class="val" id="r_davg">—</div><div class="lbl">معدل يومي</div></div>
-      <div class="stat-box purple"><div class="val" id="r_prot_day">—</div><div class="lbl">بروتين / يوم</div></div>
+      <div class="stat-box purple"><div class="val" id="r_prot_day">—</div><div class="lbl">بروتين / يوم (معدل)</div></div>
     </div>
-
-    <!-- Step 1: Calorie distribution -->
     <div class="card">
-      <div class="card-title"><span class="dot" style="background:var(--amber)"></span>الخطوة ١ — توزيع السعرات على الأيام</div>
+      <div class="card-title"><span class="dot" style="background:var(--amber)"></span>توزيع السعرات على الأيام</div>
       <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">اضغط على اليوم لتعديل سعراته. 0 = صيام.</p>
       <div class="week-grid" id="dayPlanner"></div>
       <div style="margin-top:12px;">
@@ -339,51 +243,20 @@ window._fbStartSync = function(onChange) {
       </div>
       <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
         <button class="btn btn-ghost btn-sm" onclick="distEqual()">توزيع متساوي</button>
-        <button class="btn btn-ghost btn-sm" onclick="distIF()">صيام متقطع (ا+خ)</button>
+        <button class="btn btn-ghost btn-sm" onclick="distIF()">صيام متقطع (ث+خ)</button>
+        <button class="btn btn-success" onclick="saveWeek()" style="margin-right:auto;">💾 حفظ الخطة</button>
       </div>
-    </div>
-
-    <!-- Step 2: Meal planning per day -->
-    <div class="card">
-      <div class="card-title"><span class="dot" style="background:var(--green)"></span>الخطوة ٢ — خطة وجبات الأسبوع</div>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">اضغط على أي يوم لتحديد وجبته المخططة.</p>
-      <div class="wmp-grid" id="wmpGrid"></div>
-    </div>
-
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
-      <button class="btn btn-success" onclick="saveWeek()" style="flex:1;">💾 حفظ الخطة الكاملة</button>
-      <button class="btn btn-purple btn-sm" onclick="printWeekPlan()">🖨️ طباعة خطة الوجبات</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════ LOG ══════════ -->
+<!-- ═══════════════════ LOG ═══════════════════ -->
 <div class="panel" id="panel-log">
 
-  <!-- ══ WEEKLY OVERVIEW CARD ══ -->
-  <div class="card" id="weekOverviewCard" style="margin-bottom:12px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
-      <div class="card-title" style="margin-bottom:0;"><span class="dot" style="background:var(--amber)"></span>نظرة أسبوعية — السعرات</div>
-      <div id="woWeekLabel" style="font-size:13px;color:var(--muted);font-weight:500;"></div>
-    </div>
-    <div id="woGrid" style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-bottom:12px;overflow:hidden;"></div>
-    <div id="woSummary"></div>
-    <!-- Day summary popup when clicking a day in overview -->
-    <div id="woDaySummary" style="display:none;background:var(--surface2);border:1px solid var(--accent);border-radius:12px;padding:14px;margin-top:10px;"></div>
-  </div>
-
-  <!-- Daily summary -->
+  <!-- Summary bar -->
   <div class="card" style="margin-bottom:12px;">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px;">
-      <div class="field" style="flex:1;min-width:200px;">
-        <label>📅 اليوم</label>
-        <div style="display:grid;grid-template-columns:60px 110px 82px;gap:6px;direction:ltr;">
-          <select id="ldDay" onchange="syncLogDate()" style="padding:10px 6px;font-size:14px;text-align:center;"></select>
-          <select id="ldMonth" onchange="syncLogDate()" style="padding:10px 6px;font-size:14px;"></select>
-          <select id="ldYear" onchange="syncLogDate()" style="padding:10px 6px;font-size:14px;text-align:center;"></select>
-        </div>
-        <input type="hidden" id="logDate">
-      </div>
+      <div class="field" style="flex:1;min-width:160px;"><label>📅 اليوم</label><input type="date" id="logDate" onchange="loadDay()"></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <div class="stat-box blue" style="padding:10px 14px;min-width:80px;"><div class="val" id="lTargetCal" style="font-size:18px;">—</div><div class="lbl">هدف</div></div>
         <div class="stat-box green" style="padding:10px 14px;min-width:80px;"><div class="val" id="lConsumedCal" style="font-size:18px;">0</div><div class="lbl">استهلك</div></div>
@@ -395,11 +268,8 @@ window._fbStartSync = function(onChange) {
       <div class="prog-bar"><div class="prog-fill cal" id="lCalBar" style="width:0%"></div></div>
     </div>
 
-    <!-- Planned meal for this day -->
-    <div id="plannedMealArea" style="margin-top:14px;display:none;"></div>
-
-    <!-- Protein banner -->
-    <div class="prot-banner" id="protBanner" style="display:none;margin-top:14px;">
+    <!-- PROTEIN WEEKLY TRACKER -->
+    <div class="prot-banner" id="protBanner" style="display:none;">
       <div class="pb-row">
         <div>
           <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">البروتين — تتبع أسبوعي</div>
@@ -410,11 +280,11 @@ window._fbStartSync = function(onChange) {
         </div>
         <div style="text-align:left;">
           <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">متبقي للأسبوع</div>
-          <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--prot);" id="protWeekRem">—</div>
+          <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--prot);" id="protWeekRem">—</div>
         </div>
       </div>
       <div class="prog-wrap" style="margin:0;">
-        <div class="prog-label"><span style="color:var(--prot);">البروتين الأسبوعي</span><span id="protWeekPct">0%</span></div>
+        <div class="prog-label"><span style="color:var(--prot);">التقدم الأسبوعي للبروتين</span><span id="protWeekPct">0%</span></div>
         <div class="prog-bar"><div class="prog-fill prot" id="protWeekBar" style="width:0%"></div></div>
       </div>
     </div>
@@ -422,7 +292,8 @@ window._fbStartSync = function(onChange) {
 
   <!-- Add meal -->
   <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--green)"></span>تسجيل ما أكلته فعلياً</div>
+    <div class="card-title"><span class="dot" style="background:var(--green)"></span>إضافة وجبة</div>
+
     <div class="field" style="margin-bottom:14px;">
       <label>📌 اختر من القائمة المحسوبة مسبقاً</label>
       <div class="dd-wrap">
@@ -432,8 +303,10 @@ window._fbStartSync = function(onChange) {
         <span class="dd-icon">▾</span>
       </div>
     </div>
+
     <div class="divider"></div>
     <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">✏️ أو أدخل يدوياً:</p>
+
     <div class="field" style="margin-bottom:12px;">
       <label>اسم الوجبة</label>
       <input type="text" id="mealName" placeholder="مثال: صدور دجاج مع رز...">
@@ -447,12 +320,12 @@ window._fbStartSync = function(onChange) {
 
   <!-- Meal list -->
   <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--amber)"></span>وجبات اليوم المسجلة</div>
+    <div class="card-title"><span class="dot" style="background:var(--amber)"></span>وجبات اليوم</div>
     <div id="mealList"><p style="color:var(--muted);font-size:14px;text-align:center;padding:20px;">لا توجد وجبات مسجلة</p></div>
   </div>
 </div>
 
-<!-- ══════════ MEALS MANAGER ══════════ -->
+<!-- ═══════════════════ MEALS MANAGER ═══════════════════ -->
 <div class="panel" id="panel-meals">
   <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
@@ -472,132 +345,39 @@ window._fbStartSync = function(onChange) {
   </div>
 </div>
 
-<!-- ══════════ STATS ══════════ -->
+<!-- ═══════════════════ STATS ═══════════════════ -->
 <div class="panel" id="panel-stats">
   <div class="g3" style="margin-bottom:16px;">
     <div class="stat-box blue"><div class="val" id="st_weeks">0</div><div class="lbl">أسابيع مسجلة</div></div>
     <div class="stat-box green"><div class="val" id="st_deficit">0</div><div class="lbl">إجمالي العجز (سعرة)</div></div>
     <div class="stat-box amber"><div class="val" id="st_kg">0.0</div><div class="lbl">وزن مفقود متوقع (كجم)</div></div>
   </div>
-  <div class="card"><div class="card-title"><span class="dot"></span>الأسبوع الحالي — السعرات</div><div id="weekCalArea"><p style="color:var(--muted);font-size:14px;text-align:center;padding:16px;">لا توجد خطة نشطة</p></div></div>
-  <div class="card"><div class="card-title"><span class="dot" style="background:var(--prot)"></span>الأسبوع الحالي — البروتين</div><div id="weekProtArea"><p style="color:var(--muted);font-size:14px;text-align:center;padding:16px;">لا توجد بيانات</p></div></div>
-  <div class="card"><div class="card-title"><span class="dot" style="background:var(--green)"></span>تاريخ الوزن</div><div id="weightChart"><p style="color:var(--muted);font-size:14px;text-align:center;padding:16px;">سجّل الوزن في خطط الأسابيع</p></div></div>
+  <div class="card">
+    <div class="card-title"><span class="dot"></span>الأسبوع الحالي — السعرات</div>
+    <div id="weekCalArea"><p style="color:var(--muted);font-size:14px;text-align:center;padding:16px;">لا توجد خطة نشطة</p></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--prot)"></span>الأسبوع الحالي — البروتين</div>
+    <div id="weekProtArea"><p style="color:var(--muted);font-size:14px;text-align:center;padding:16px;">لا توجد بيانات</p></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--green)"></span>تاريخ الوزن</div>
+    <div id="weightChart"><p style="color:var(--muted);font-size:14px;text-align:center;padding:16px;">سجّل الوزن في خطط الأسابيع</p></div>
+  </div>
   <div class="card"><div class="card-title"><span class="dot"></span>🏆 الإنجازات</div><div id="achievements"></div></div>
 </div>
 
-<!-- ══════════ HISTORY ══════════ -->
+<!-- ═══════════════════ HISTORY ═══════════════════ -->
 <div class="panel" id="panel-history">
-  <div class="card"><div class="card-title"><span class="dot"></span>سجل الأسابيع</div><div id="histTable"><p style="color:var(--muted);font-size:14px;text-align:center;padding:20px;">لا يوجد سجل</p></div></div>
+  <div class="card">
+    <div class="card-title"><span class="dot"></span>سجل الأسابيع</div>
+    <div id="histTable"><p style="color:var(--muted);font-size:14px;text-align:center;padding:20px;">لا يوجد سجل</p></div>
+  </div>
   <div style="margin-top:8px;"><button class="btn btn-danger btn-sm" onclick="clearAll()">🗑️ حذف جميع البيانات</button></div>
 </div>
 
-<!-- INGREDIENT EDITOR MODAL -->
-<div id="ingModal" style="display:none;position:fixed;inset:0;z-index:920;background:rgba(0,0,0,.8);backdrop-filter:blur(5px);align-items:flex-start;justify-content:center;padding:16px;overflow-y:auto;">
-  <div style="background:#161b22;border:1px solid var(--accent);border-radius:18px;padding:20px;width:100%;max-width:480px;margin:auto;box-shadow:0 24px 60px rgba(0,0,0,.7);">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-      <div style="font-size:16px;font-weight:700;color:#e6edf3;" id="ingModalTitle">إضافة وجبة</div>
-      <button onclick="closeIngModal()" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:2px 6px;">✕</button>
-    </div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:12px;" id="ingModalSub">اختر وجبة من القائمة</div>
 
-    <!-- Dropdown inside modal -->
-    <div style="margin-bottom:14px;">
-      <div class="dd-wrap">
-        <select id="ingModalDD" onchange="ingModalSelectPreset(this)" style="background:#1c2333;border-color:#243044;">
-          <option value="">— اختر وجبة —</option>
-        </select>
-        <span class="dd-icon">▾</span>
-      </div>
-    </div>
-
-    <!-- Ingredient list -->
-    <div id="ingList" style="margin-bottom:14px;">
-      <p style="color:var(--muted);font-size:13px;text-align:center;padding:20px;">اختر وجبة من القائمة أعلاه</p>
-    </div>
-
-    <!-- totals -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
-      <div style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:10px;text-align:center;">
-        <div style="font-size:11px;color:var(--muted);margin-bottom:2px;">🔥 إجمالي السعرات</div>
-        <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);" id="ingTotalCal">0</div>
-      </div>
-      <div style="background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);border-radius:10px;padding:10px;text-align:center;">
-        <div style="font-size:11px;color:var(--muted);margin-bottom:2px;">💪 إجمالي البروتين</div>
-        <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--prot);" id="ingTotalProt">0</div>
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <button onclick="closeIngModal()" style="flex:1;padding:12px;border-radius:10px;border:1px solid #243044;background:#1c2333;color:#e6edf3;font-size:14px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans Arabic',sans-serif;">إغلاق</button>
-      <button onclick="confirmIngMeal()" id="ingConfirmBtn" style="flex:2;padding:12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans Arabic',sans-serif;">✅ تسجيل الوجبة</button>
-    </div>
-  </div>
-</div>
-
-<!-- EDIT ITEM MODAL -->
-<div id="editItemModal" style="display:none;position:fixed;inset:0;z-index:910;background:rgba(0,0,0,.8);backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding:16px;overflow-y:auto;">
-  <div style="background:#161b22;border:1px solid var(--amber);border-radius:18px;padding:20px;width:100%;max-width:500px;margin:auto;box-shadow:0 24px 60px rgba(0,0,0,.7);">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-      <div style="font-size:16px;font-weight:700;color:#e6edf3;">✏️ تعديل الوجبة</div>
-      <button onclick="closeEiModal()" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;">✕</button>
-    </div>
-    <div style="font-size:13px;color:var(--muted);margin-bottom:14px;" id="eiModalSub"></div>
-    <input type="hidden" id="eiGid">
-    <input type="hidden" id="eiIid">
-    <div style="display:grid;grid-template-columns:70px 1fr;gap:10px;margin-bottom:10px;">
-      <div class="field"><label>الكود</label><input type="text" id="eiCode" maxlength="5" style="font-family:monospace;font-size:14px;background:#1c2333;border-color:#243044;text-align:center;"></div>
-      <div class="field"><label>اسم الوجبة</label><input type="text" id="eiName" style="background:#1c2333;border-color:#243044;"></div>
-    </div>
-    <!-- Ingredients editor section -->
-    <div id="eiIngSection" style="display:none;margin-bottom:14px;">
-      <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;">
-        <span>🥩 المكونات</span>
-        <button onclick="eiAddIngRow()" style="font-size:11px;padding:3px 10px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);border-radius:6px;color:var(--green);cursor:pointer;font-family:'IBM Plex Sans Arabic',sans-serif;">＋ مكون</button>
-      </div>
-      <div style="font-size:10px;display:grid;grid-template-columns:1fr 55px 55px 55px 24px;gap:4px;padding:0 0 4px;border-bottom:1px solid var(--border);margin-bottom:4px;color:var(--muted);">
-        <span>المكون</span><span style="text-align:center;">الكمية</span><span style="text-align:center;color:var(--accent);">سعرة/و</span><span style="text-align:center;color:var(--prot);">بروتين/و</span><span></span>
-      </div>
-      <div id="eiIngRows"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
-        <div style="background:rgba(59,130,246,.08);border-radius:8px;padding:7px;text-align:center;">
-          <div style="font-size:10px;color:var(--muted);">إجمالي السعرات</div>
-          <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--accent);" id="eiTotalCal">—</div>
-        </div>
-        <div style="background:rgba(168,85,247,.08);border-radius:8px;padding:7px;text-align:center;">
-          <div style="font-size:10px;color:var(--muted);">إجمالي البروتين</div>
-          <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--prot);" id="eiTotalProt">—</div>
-        </div>
-      </div>
-    </div>
-    <!-- No-ingredients fallback -->
-    <div id="eiNoIngSection" style="display:none;margin-bottom:14px;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-        <div class="field"><label>🔥 السعرات</label><input type="number" id="eiCal" style="background:#1c2333;border-color:#243044;"></div>
-        <div class="field"><label>💪 البروتين (جم)</label><input type="number" id="eiProt" style="background:#1c2333;border-color:#243044;"></div>
-      </div>
-    </div>
-    <div style="display:flex;gap:10px;">
-      <button onclick="closeEiModal()" style="flex:1;padding:12px;border-radius:10px;border:1px solid #243044;background:#1c2333;color:#e6edf3;font-size:14px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans Arabic',sans-serif;">إلغاء</button>
-      <button onclick="saveEditItem()" style="flex:2;padding:12px;border-radius:10px;border:none;background:var(--amber);color:#000;font-size:14px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans Arabic',sans-serif;">✔ حفظ التعديل</button>
-    </div>
-  </div>
-</div></div>
-
-</div><!-- .app -->
-
-<!-- ══════════ PRINT PAGE (hidden) ══════════ -->
-<div id="printPage">
-  <div class="print-header">
-    <h2 id="printTitle">خطة وجبات الأسبوع</h2>
-    <p id="printSubtitle"></p>
-  </div>
-  <table class="print-table" id="printTable">
-    <thead><tr><th>اليوم</th><th>التاريخ</th><th>الوجبة / الوجبات</th><th>السعرات</th><th>البروتين</th></tr></thead>
-    <tbody id="printBody"></tbody>
-  </table>
-  <div class="print-footer" id="printFooter"></div>
-</div>
-
-<!-- EDIT DAY MODAL (calories) -->
+<!-- EDIT DAY MODAL -->
 <div id="editModal" style="display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
   <div style="background:#161b22;border:1px solid #3b82f6;border-radius:18px;padding:28px 24px;width:88%;max-width:320px;box-shadow:0 24px 60px rgba(0,0,0,.7);">
     <div style="font-size:17px;font-weight:700;margin-bottom:6px;color:#e6edf3;" id="modalTitle">تعديل السعرات</div>
@@ -610,746 +390,289 @@ window._fbStartSync = function(onChange) {
   </div>
 </div>
 
-<!-- MEAL PLAN MODAL (per day) -->
-<div id="mealPlanModal" style="display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;">
-  <div style="background:#161b22;border:1px solid #3b82f6;border-radius:18px;padding:24px;width:100%;max-width:480px;box-shadow:0 24px 60px rgba(0,0,0,.7);max-height:90vh;overflow-y:auto;">
-    <div style="font-size:17px;font-weight:700;margin-bottom:4px;color:#e6edf3;" id="mpModalTitle">تحديد وجبة اليوم</div>
-    <div style="font-size:13px;color:#7d8590;margin-bottom:16px;" id="mpModalSub"></div>
-
-    <div class="field" style="margin-bottom:12px;">
-      <label>📌 اختر من القائمة المحسوبة</label>
-      <div class="dd-wrap">
-        <select id="mpPresetDD" onchange="mpSelectPreset(this)" style="background:#1c2333;border-color:#243044;">
-          <option value="">— اختر —</option>
-        </select>
-        <span class="dd-icon">▾</span>
-      </div>
-    </div>
-    <div class="divider"></div>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">✏️ أو أدخل يدوياً:</p>
-    <div class="field" style="margin-bottom:10px;">
-      <label>اسم الوجبة</label>
-      <input type="text" id="mpMealName" placeholder="مثال: مشاوي مع رز" style="background:#1c2333;border-color:#243044;">
-    </div>
-    <div class="g2" style="margin-bottom:10px;">
-      <div class="field"><label>🔥 السعرات</label><input type="number" id="mpMealCal" placeholder="0" style="background:#1c2333;border-color:#243044;"></div>
-      <div class="field"><label>💪 البروتين (جم)</label><input type="number" id="mpMealProt" placeholder="0" style="background:#1c2333;border-color:#243044;"></div>
-    </div>
-    <div class="field" style="margin-bottom:16px;">
-      <label>💬 ملاحظات للخادمة (اختياري)</label>
-      <input type="text" id="mpMealNotes" placeholder="مثال: بدون ملح، خفيف التتبيل..." style="background:#1c2333;border-color:#243044;">
-    </div>
-    <div style="display:flex;gap:10px;">
-      <button onclick="closeMpModal()" style="flex:1;padding:13px;border-radius:10px;border:1px solid #243044;background:#1c2333;color:#e6edf3;font-size:14px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans Arabic',sans-serif;">إلغاء</button>
-      <button onclick="saveMealPlan()" style="flex:2;padding:13px;border-radius:10px;border:none;background:#10b981;color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans Arabic',sans-serif;">✔ حفظ وجبة اليوم</button>
-    </div>
-  </div>
-</div>
-
+</div><!-- .app -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════
-//  DB
-// ══════════════════════════════════════════
-const KEY = 'prodiet_v5';
+// ══════════════════════════════════════════════
+//  DATABASE
+// ══════════════════════════════════════════════
+const KEY = 'prodiet_v4';
 let db = loadDB();
+
 function loadDB() {
   try {
     const d = JSON.parse(localStorage.getItem(KEY));
     if (d) { if (!d.presets) d.presets = defaultPresets(); return d; }
   } catch(e) {}
-  return { weeks:[], days:{}, presets:defaultPresets() };
+  return { weeks: [], days: {}, presets: defaultPresets() };
 }
-function saveDB() {
-  localStorage.setItem(KEY, JSON.stringify(db));
-  if(window._fbSave) window._fbSave(db);
-}
+function saveDB() { localStorage.setItem(KEY, JSON.stringify(db)); }
 
 function defaultPresets() {
   return [
     { id:'g1', name:'وجبات بالرز', items:[
-      {id:'i1',code:'R01',name:'مشاوي مع رز',cal:1074,prot:104,ingredients:[
-        {name:'١٠٠ جرام شيش طاووق / فاهيتا / شاورما',qty:4,calPer:124,protPer:19},
-        {name:'١٠٠ جرام رز أبيض مع قليل من الزبدة',qty:4,calPer:130,protPer:2.5},
-        {name:'لبن قليل الدسم 170 جرام',qty:1,calPer:90,protPer:2},
-        {name:'سكوب بيف بروتين',qty:1,calPer:114,protPer:28}
-      ]},
-      {id:'i2',code:'R02',name:'دجاجة كاملة مع رز',cal:1686,prot:129,ingredients:[
-        {name:'١٠٠ جرام دجاج كاملة الوطنية',qty:6,calPer:226,protPer:20.5},
-        {name:'١٠٠ جرام رز أبيض مع قليل من الزبدة',qty:3,calPer:130,protPer:2.5},
-        {name:'لبن قليل الدسم 170 جرام',qty:1,calPer:90,protPer:2}
-      ]},
-      {id:'i3',code:'R03',name:'سمك هامور مع رز',cal:1060,prot:114,ingredients:[
-        {name:'١٠٠ جرام سمك هامور',qty:5,calPer:118,protPer:20},
-        {name:'١٠٠ جرام رز أبيض مع قليل من الزبدة',qty:4,calPer:130,protPer:2.5},
-        {name:'لبن قليل الدسم 170 جرام',qty:1,calPer:90,protPer:2}
-      ]},
-      {id:'i4',code:'R04',name:'لحم حاشي مع رز (1300)',cal:1300,prot:119,ingredients:[
-        {name:'١٠٠ جرام لحم حاشي',qty:4.5,calPer:220,protPer:25},
-        {name:'١٠٠ جرام رز أبيض مع قليل من الزبدة',qty:4,calPer:130,protPer:2.5},
-        {name:'لبن قليل الدسم 170 جرام',qty:1,calPer:90,protPer:2}
-      ]},
-      {id:'i5',code:'R05',name:'ربيان مع رز',cal:1175,prot:119,ingredients:[
-        {name:'١٠٠ جرام ربيان',qty:5,calPer:109,protPer:21},
-        {name:'١٠٠ جرام رز أبيض مع قليل من الزبدة',qty:4,calPer:130,protPer:2.5},
-        {name:'لبن قليل الدسم 170 جرام',qty:1,calPer:90,protPer:2}
-      ]},
-      {id:'i6',code:'R06',name:'صدور دجاج بالمشروم والرز (1300)',cal:1300,prot:107,ingredients:[
-        {name:'١٠٠ جرام صدور دجاج',qty:4,calPer:104,protPer:24.5},
-        {name:'١٠٠ جرام رز أبيض مع قليل من الزبدة',qty:4,calPer:130,protPer:2.5},
-        {name:'٣٠ مل كريمة خفق',qty:3.3,calPer:79,protPer:0.9},
-        {name:'١٠ جرام ترفل سوس',qty:1.5,calPer:22,protPer:0.4},
-        {name:'١٠٠ جرام مشروم',qty:1,calPer:25,protPer:4}
-      ]}
-    ]},
-    { id:'g1b', name:'وجبات بالرز (2400)', items:[
-      {id:'i7',code:'R07',name:'لحم حاشي مع رز (2400)',cal:2420,prot:134,ingredients:[
-        {name:'١٠٠ جرام لحم حاشي',qty:5,calPer:220,protPer:25},
-        {name:'١٠٠ جرام رز كبسة',qty:5,calPer:190,protPer:8},
-        {name:'لبن عيران المراعي 180 مل',qty:1,calPer:85,protPer:4},
-        {name:'تمر خلاص محشي لوز',qty:9,calPer:38,protPer:0.5}
-      ]},
-      {id:'i8',code:'R08',name:'لحم نعيمي مع رز (2400)',cal:2390,prot:153,ingredients:[
-        {name:'١٠٠ جرام لحم نعيمي',qty:4.5,calPer:320,protPer:25},
-        {name:'١٠٠ جرام رز كبسة',qty:5,calPer:190,protPer:8},
-        {name:'تمر خلاص محشي لوز',qty:0,calPer:38,protPer:0.5}
-      ]},
-      {id:'i9',code:'R09',name:'صدور دجاج بالمشروم والرز (2400)',cal:2480,prot:156,ingredients:[
-        {name:'١٠٠ جرام صدور دجاج',qty:5,calPer:104,protPer:24.5},
-        {name:'١٠٠ جرام رز أبيض مع قليل من الزبدة',qty:4.5,calPer:130,protPer:2.5},
-        {name:'٣٠ مل كريمة خفق',qty:5,calPer:79,protPer:0.9},
-        {name:'١٠ جرام ترفل سوس',qty:2,calPer:22,protPer:0.4},
-        {name:'١٠٠ جرام مشروم',qty:1,calPer:25,protPer:4},
-        {name:'تمر خلاص محشي لوز',qty:10,calPer:38,protPer:0.5}
-      ]}
+      {id:'i1', name:'مشاوي مع رز', cal:1074, prot:104},
+      {id:'i2', name:'دجاجة كاملة مع رز', cal:1686, prot:129},
+      {id:'i3', name:'سمك هامور مع رز', cal:1060, prot:114},
+      {id:'i4', name:'لحم حاشي مع رز (1300)', cal:1300, prot:119},
+      {id:'i5', name:'ربيان مع رز', cal:1175, prot:119},
+      {id:'i6', name:'صدور دجاج بالمشروم والرز', cal:1300, prot:107},
+      {id:'i7', name:'لحم حاشي مع رز (2400)', cal:2420, prot:134},
+      {id:'i8', name:'لحم نعيمي مع رز (2400)', cal:2390, prot:153},
+      {id:'i9', name:'صدور دجاج بالمشروم والرز (2400)', cal:2480, prot:156},
     ]},
     { id:'g2', name:'وجبات بالخبز', items:[
-      {id:'i10',code:'B01',name:'ساندويش بيض مسلوق',cal:1284,prot:83,ingredients:[
-        {name:'بيض مسلوق',qty:4,calPer:72,protPer:6.5},
-        {name:'خبز ساوردو أفران الحطب',qty:4,calPer:188,protPer:8},
-        {name:'ملعقة كاتشب خالي السكر',qty:2,calPer:10,protPer:0},
-        {name:'ملعقة مايونيز هاينز قليل الدسم',qty:2,calPer:40,protPer:0.75},
-        {name:'سكوب بيف بروتين',qty:2,calPer:114,protPer:28}
-      ]},
-      {id:'i11',code:'B02',name:'ساندويش فيليه دجاج',cal:1330,prot:108,ingredients:[
-        {name:'١٠٠ جرام صدور دجاج',qty:4,calPer:104,protPer:24.5},
-        {name:'برجر الكيتو أفران الحطب',qty:2,calPer:150,protPer:12},
-        {name:'ملعقة كاتشب خالي السكر',qty:2,calPer:10,protPer:0},
-        {name:'ملعقة مايونيز هاينز قليل الدسم',qty:2,calPer:40,protPer:0.75},
-        {name:'١٠٠ جرام بطاطس بالقلاية الهوائية',qty:3,calPer:170,protPer:3},
-        {name:'شريحة جبن شدر المراعي',qty:2,calPer:56,protPer:3}
-      ]},
-      {id:'i12',code:'B03',name:'صحن بيض بالطماط',cal:1300,prot:80,ingredients:[
-        {name:'بيض بالطماط',qty:6,calPer:72,protPer:6.5},
-        {name:'خبز المثالي',qty:2,calPer:118,protPer:4.3},
-        {name:'١٠٠ جرام بطاطس بالقلاية الهوائية',qty:3.5,calPer:170,protPer:3},
-        {name:'سكوب بيف بروتين',qty:1,calPer:114,protPer:28}
-      ]},
-      {id:'i13',code:'B04',name:'ساندويش تونة',cal:1360,prot:97,ingredients:[
-        {name:'علبة تونة بالماء فرشكو 185 جرام',qty:2,calPer:213,protPer:48},
-        {name:'خبز ساوردو أفران الحطب',qty:4,calPer:188,protPer:8},
-        {name:'ملعقة مايونيز هاينز قليل الدسم',qty:2,calPer:40,protPer:0.75},
-        {name:'ملعقة ماسترد هاينز',qty:2,calPer:32,protPer:0},
-        {name:'٢٠ جرام ذرة معلب بدون سكر',qty:2,calPer:17,protPer:0.5}
-      ]},
-      {id:'i14',code:'B05',name:'برجر لحم',cal:1374,prot:118,ingredients:[
-        {name:'١٠٠ جرام لحم بقري 10% دهون',qty:4,calPer:210,protPer:24},
-        {name:'برجر الكيتو أفران الحطب',qty:2,calPer:150,protPer:12},
-        {name:'ملعقة كاتشب خالي السكر',qty:2,calPer:10,protPer:0},
-        {name:'ملعقة مايونيز هاينز قليل الدسم',qty:2,calPer:40,protPer:0.75},
-        {name:'شريحة جبن شدر المراعي',qty:4,calPer:56,protPer:3}
-      ]},
-      {id:'i15',code:'B06',name:'ساندويش بيض بالجبن',cal:1295,prot:95,ingredients:[
-        {name:'بيض مقلي',qty:4,calPer:72,protPer:6.5},
-        {name:'برجر الكيتو أفران الحطب',qty:2,calPer:150,protPer:12},
-        {name:'ملعقة كاتشب خالي السكر',qty:2,calPer:10,protPer:0},
-        {name:'ملعقة مايونيز هاينز قليل الدسم',qty:2,calPer:40,protPer:0.75},
-        {name:'شريحة جبن شدر المراعي',qty:2,calPer:56,protPer:3},
-        {name:'١٠٠ جرام بطاطس بالقلاية الهوائية',qty:2.5,calPer:170,protPer:3},
-        {name:'سكوب بيف بروتين',qty:1,calPer:114,protPer:28}
-      ]},
-      {id:'i16',code:'B07',name:'ساندويشات مشاوي',cal:1292,prot:88,ingredients:[
-        {name:'١٠٠ جرام شيش طاووق / فاهيتا / شاورما',qty:4,calPer:124,protPer:19},
-        {name:'خبز المثالي',qty:2,calPer:118,protPer:4.3},
-        {name:'ثوم الفروج الذهبي',qty:2,calPer:25,protPer:0},
-        {name:'١٠٠ جرام بطاطس بالقلاية الهوائية',qty:3,calPer:170,protPer:3}
-      ]},
-      {id:'i17',code:'B08',name:'كلوب ساندويش',cal:1378,prot:93,ingredients:[
-        {name:'بيض مقلي',qty:4,calPer:72,protPer:6.5},
-        {name:'١٠٠ جرام صدر دجاج',qty:2,calPer:165,protPer:31},
-        {name:'خبز ساوردو أفران الحطب',qty:4,calPer:188,protPer:8},
-        {name:'ملعقة كاتشب خالي السكر',qty:1.5,calPer:10,protPer:0},
-        {name:'ملعقة مايونيز هاينز قليل الدسم',qty:1.5,calPer:40,protPer:0.75}
-      ]},
-      {id:'i18',code:'B09',name:'ساندويش حلوم',cal:1304,prot:72,ingredients:[
-        {name:'٣٠ جرام حلوم المراعي',qty:4.6,calPer:98,protPer:7},
-        {name:'خبز ساوردو أفران الحطب',qty:4,calPer:188,protPer:8},
-        {name:'١٥ جرام بيستو',qty:1,calPer:100,protPer:2},
-        {name:'١٥ جرام طماط مجفف',qty:1,calPer:100,protPer:0},
-        {name:'سكوب بيف بروتين',qty:0,calPer:114,protPer:28}
-      ]},
-      {id:'i19',code:'B10',name:'بيتزا الدجاج',cal:1180,prot:156,ingredients:[
-        {name:'١٠٠ جرام صدور دجاج',qty:5,calPer:104,protPer:24.5},
-        {name:'بيض',qty:2,calPer:72,protPer:6.5},
-        {name:'٣٠ جرام جبنة موزريلا المراعي',qty:3.3,calPer:87,protPer:7},
-        {name:'١٦ جرام صلصة البيتزا',qty:2,calPer:16,protPer:0.2},
-        {name:'١٠٠ جرام ببروني',qty:0.5,calPer:250,protPer:25},
-        {name:'١٠٠ جرام مشروم',qty:0.5,calPer:25,protPer:4}
-      ]},
-      {id:'i20',code:'B11',name:'ساندويش فلافل بالبيض',cal:1790,prot:56,ingredients:[
-        {name:'حبة فلافل مقلية',qty:9,calPer:90,protPer:2},
-        {name:'بيض مسلوق',qty:3,calPer:72,protPer:6.5},
-        {name:'١٠٠ جرام بطاطس بالقلاية الهوائية',qty:1.5,calPer:170,protPer:3},
-        {name:'١٠٠ جرام باذنجان مقلي',qty:1,calPer:250,protPer:1},
-        {name:'خبز المثالي',qty:3,calPer:118,protPer:4.3},
-        {name:'ملعقة حمص 30 جرام',qty:3,calPer:150,protPer:28}
-      ]}
+      {id:'i10', name:'ساندويش بيض مسلوق', cal:1284, prot:83},
+      {id:'i11', name:'ساندويش فيليه دجاج', cal:1330, prot:108},
+      {id:'i12', name:'صحن بيض بالطماط', cal:1300, prot:80},
+      {id:'i13', name:'ساندويش تونة', cal:1360, prot:97},
+      {id:'i14', name:'برجر لحم', cal:1374, prot:118},
+      {id:'i15', name:'ساندويش بيض بالجبن', cal:1295, prot:95},
+      {id:'i16', name:'ساندويشات مشاوي', cal:1292, prot:88},
+      {id:'i17', name:'كلوب ساندويش', cal:1378, prot:93},
+      {id:'i18', name:'ساندويش حلوم', cal:1304, prot:72},
+      {id:'i19', name:'بيتزا الدجاج', cal:1180, prot:156},
+      {id:'i20', name:'ساندويش فلافل بالبيض', cal:1790, prot:56},
     ]},
     { id:'g3', name:'وجبات عائلية', items:[
-      {id:'i21',code:'F01',name:'دجاجة كاملة بالخبز والبطاطس',cal:1900,prot:136,ingredients:[
-        {name:'٢٠٠ جرام دجاجة المراعي كاملة',qty:3.75,calPer:320,protPer:34},
-        {name:'١٠٠ جرام بطاطس بالقلاية الهوائية',qty:3,calPer:170,protPer:3},
-        {name:'خبز المثالي',qty:3,calPer:118,protPer:4.3},
-        {name:'تمر خلاص محشي لوز',qty:5,calPer:38,protPer:0.5}
-      ]},
-      {id:'i22',code:'F02',name:'البيك (دبل ساندويش)',cal:1400,prot:60,ingredients:[
-        {name:'ساندويش دبل بيك',qty:2,calPer:637,protPer:30},
-        {name:'تمر خلاص محشي لوز',qty:2,calPer:38,protPer:0.5}
-      ]},
-      {id:'i23',code:'F03',name:'البيك (بروستد + جامبو ربيان)',cal:2400,prot:71,ingredients:[
-        {name:'بروستد 4 قطع مع بطاطس وثوم',qty:1,calPer:1190,protPer:50},
-        {name:'جامبو ربيان',qty:1,calPer:880,protPer:21},
-        {name:'خبز المثالي',qty:2,calPer:118,protPer:4.3},
-        {name:'تمر خلاص محشي لوز',qty:2,calPer:38,protPer:0.5}
-      ]},
-      {id:'i24',code:'F04',name:'لحم حاشي مع رز كبسة',cal:1570,prot:134,ingredients:[
-        {name:'١٠٠ جرام لحم حاشي',qty:4.5,calPer:220,protPer:25},
-        {name:'١٠٠ جرام رز كبسة',qty:4,calPer:190,protPer:8},
-        {name:'تمر خلاص محشي لوز',qty:5,calPer:38,protPer:0.5}
-      ]}
+      {id:'i21', name:'دجاجة كاملة بالخبز والبطاطس', cal:1900, prot:136},
+      {id:'i22', name:'البيك (دبل ساندويش)', cal:1400, prot:60},
+      {id:'i23', name:'البيك (بروستد+جامبو ربيان)', cal:2400, prot:71},
+      {id:'i24', name:'لحم حاشي مع رز كبسة', cal:1570, prot:134},
     ]},
     { id:'g4', name:'أيام خاصة', items:[
-      {id:'i25',code:'S01',name:'يوم مفتوح (3000)',cal:3000,prot:80,ingredients:[]},
-      {id:'i26',code:'S02',name:'يوم مفتوح (4000)',cal:4000,prot:80,ingredients:[]},
-      {id:'i27',code:'S03',name:'يوم صيام',cal:0,prot:0,ingredients:[]}
-    ]}
+      {id:'i25', name:'يوم مفتوح (3000)', cal:3000, prot:80},
+      {id:'i26', name:'يوم مفتوح (4000)', cal:4000, prot:80},
+      {id:'i27', name:'يوم صيام', cal:0, prot:0},
+    ]},
   ];
 }
-function uid() { return 'x'+Math.random().toString(36).slice(2,8); }
 
-// ══════════════════════════════════════════
+function uid() { return 'x' + Math.random().toString(36).slice(2,8); }
+
+// ══════════════════════════════════════════════
 //  UTILS
-// ══════════════════════════════════════════
+// ══════════════════════════════════════════════
 const DAYS = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 const today = () => new Date().toISOString().slice(0,10);
-const fmtDate = d => { const x=new Date(d+'T00:00:00'); return (x.getDate()+'').padStart(2,'0')+'/'+(x.getMonth()+1+'').padStart(2,'0'); };
-const MONTHS_AR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-const fmtDateFull = d => { const x=new Date(d+'T00:00:00'); return x.getDate()+' '+MONTHS_AR[x.getMonth()]+' '+x.getFullYear(); };
+const fmtDate = d => new Date(d+'T00:00:00').toLocaleDateString('en-GB');
 const addDays = (s,n) => { const d=new Date(s+'T00:00:00'); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); };
 const dow = s => new Date(s+'T00:00:00').getDay();
 const weekStart = s => { const d=new Date(s+'T00:00:00'); d.setDate(d.getDate()-d.getDay()); return d.toISOString().slice(0,10); };
-
-// ══ LOG DATE PICKERS ══
-function buildLogDatePickers(dateStr){
-  const dt = dateStr ? new Date(dateStr+'T00:00:00') : new Date();
-  const curY=dt.getFullYear(), curM=dt.getMonth(), curD=dt.getDate();
-
-  // Build year options: 2 years back, 1 year ahead
-  const selY=document.getElementById('ldYear');
-  if(selY && !selY.options.length){
-    for(let y=curY-2;y<=curY+1;y++){
-      const o=document.createElement('option');
-      o.value=y; o.textContent=y;
-      selY.appendChild(o);
-    }
-  }
-  if(selY) selY.value=curY;
-
-  // Build month options
-  const selM=document.getElementById('ldMonth');
-  if(selM && !selM.options.length){
-    MONTHS_AR.forEach((m,i)=>{
-      const o=document.createElement('option');
-      o.value=i+1; o.textContent=m;
-      selM.appendChild(o);
-    });
-  }
-  if(selM) selM.value=curM+1;
-
-  // Build day options based on month/year
-  rebuildDayOptions(curY, curM+1, curD);
-}
-
-function rebuildDayOptions(y, m, selDay){
-  const selD=document.getElementById('ldDay');
-  if(!selD)return;
-  const prev=parseInt(selD.value)||selDay;
-  selD.innerHTML='';
-  const days=new Date(y, m, 0).getDate();
-  for(let d=1;d<=days;d++){
-    const o=document.createElement('option');
-    o.value=d; o.textContent=(d+'').padStart(2,'0');
-    selD.appendChild(o);
-  }
-  selD.value=Math.min(prev,days);
-}
-
-function syncLogDate(){
-  const selD=document.getElementById('ldDay');
-  const selM=document.getElementById('ldMonth');
-  const selY=document.getElementById('ldYear');
-  if(!selD||!selM||!selY)return;
-  const y=parseInt(selY.value), m=parseInt(selM.value);
-  rebuildDayOptions(y,m,parseInt(selD.value));
-  const d=parseInt(selD.value);
-  const dateStr=y+'-'+(m+'').padStart(2,'0')+'-'+(d+'').padStart(2,'0');
-  document.getElementById('logDate').value=dateStr;
-  loadDay();
-}
-
-function setLogDate(dateStr){
-  document.getElementById('logDate').value=dateStr;
-  buildLogDatePickers(dateStr);
-}
+const n = v => (v||0).toLocaleString();
 
 function toast(msg) {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2800);
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
 }
 
-// ══════════════════════════════════════════
+// ══════════════════════════════════════════════
 //  INIT
-// ══════════════════════════════════════════
-document.addEventListener('DOMContentLoaded',()=>{
-  const t=today();
-  const d=new Date(t+'T00:00:00');
-  document.getElementById('dateChip').textContent=DAYS[d.getDay()]+' · '+fmtDateFull(t);
-  document.getElementById('weekStart').value=weekStart(t);
-  setLogDate(t);
-  // Migrate: merge ingredients from defaultPresets into existing db.presets
-  const fresh = defaultPresets();
-  let migrated = 0;
-  for (const fg of fresh) {
-    for (const fi of fg.items) {
-      if (!fi.ingredients || !fi.ingredients.length) continue;
-      // Find matching item in db by id
-      for (const dg of db.presets) {
-        const di = dg.items.find(x => x.id === fi.id);
-        if (di && (!di.ingredients || !di.ingredients.length)) {
-          di.ingredients = fi.ingredients;
-          migrated++;
-        }
-      }
-    }
-  }
-  if (migrated > 0) { saveDB(); console.log('Migrated ingredients:', migrated); }
-  buildDDs(); loadDay(); loadStats(); loadHistory(); loadWeekOverview();
-  document.getElementById('protFactor').addEventListener('change',updateProtPreview);
-  document.getElementById('protCustom').addEventListener('input',updateProtPreview);
-  document.getElementById('curWeight').addEventListener('input',updateProtPreview);
-
-  // Firebase sync via REST polling
-  if(window._fbStartSync) {
-    window._fbStartSync((remote) => {
-      if(!remote) return;
-      const localStr = JSON.stringify({w:db.weeks.length, d:Object.keys(db.days).length});
-      const remoteStr = JSON.stringify({w:(remote.weeks||[]).length, d:Object.keys(remote.days||{}).length});
-      if(localStr === remoteStr) return; // no change
-      db = {
-        weeks:   remote.weeks   || [],
-        days:    remote.days    || {},
-        presets: (remote.presets && remote.presets.length) ? remote.presets : db.presets
-      };
-      localStorage.setItem(KEY, JSON.stringify(db));
-      buildDDs(); loadDay(); loadStats(); loadHistory(); loadWeekOverview();
-      toast('🔄 تمت المزامنة');
-    });
-  }
+// ══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  const t = today();
+  const d = new Date(t+'T00:00:00');
+  document.getElementById('dateChip').textContent = fmtDate(t) + ' ' + DAYS[d.getDay()];
+  document.getElementById('weekStart').value = weekStart(t);
+  document.getElementById('logDate').value = t;
+  buildDD(); loadDay(); loadStats(); loadHistory();
+  document.getElementById('protFactor').addEventListener('change', updateProtPreview);
+  document.getElementById('protCustom').addEventListener('input', updateProtPreview);
+  document.getElementById('curWeight').addEventListener('input', updateProtPreview);
 });
 
 function switchTab(n) {
-  const names=['plan','log','meals','stats','history'];
-  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',names[i]===n));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  const names = ['plan','log','meals','stats','history'];
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', names[i]===n));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-'+n).classList.add('active');
-  if(n==='stats') loadStats();
-  if(n==='history') loadHistory();
-  if(n==='meals') renderPM();
-  if(n==='log') { buildDDs(); loadDay(); loadWeekOverview(); }
+  if (n==='stats') loadStats();
+  if (n==='history') loadHistory();
+  if (n==='meals') renderPM();
+  if (n==='log') { buildDD(); loadDay(); }
 }
 
-// ══════════════════════════════════════════
+// ══════════════════════════════════════════════
 //  PROTEIN PREVIEW
-// ══════════════════════════════════════════
+// ══════════════════════════════════════════════
 function calcProtTarget() {
-  const wt=parseFloat(document.getElementById('curWeight').value)||0;
-  const fv=document.getElementById('protFactor').value;
-  const custom=parseFloat(document.getElementById('protCustom').value)||0;
-  if(fv==='custom'&&custom>0) return custom;
-  if(wt>0) return Math.round(wt*parseFloat(fv)*7);
+  const wt = parseFloat(document.getElementById('curWeight').value) || 0;
+  const fv = document.getElementById('protFactor').value;
+  const custom = parseFloat(document.getElementById('protCustom').value) || 0;
+  if (fv === 'custom' && custom > 0) return custom;
+  if (wt > 0) return Math.round(wt * parseFloat(fv) * 7);
   return 0;
 }
+
 function updateProtPreview() {
-  const pt=calcProtTarget();
-  document.getElementById('r_prot_weekly').textContent=pt>0?pt:'—';
-  document.getElementById('r_prot_day').textContent=pt>0?Math.round(pt/7):'—';
+  const pt = calcProtTarget();
+  document.getElementById('r_prot_weekly').textContent = pt > 0 ? pt : '—';
+  if (pt > 0) {
+    document.getElementById('r_prot_day').textContent = Math.round(pt/7);
+  }
 }
 
-// ══════════════════════════════════════════
-//  WEEK PLAN — CALORIES
-// ══════════════════════════════════════════
-let tempBudgets=[], weekBudget=0, tempMealPlans=[];
+// ══════════════════════════════════════════════
+//  WEEK PLAN
+// ══════════════════════════════════════════════
+let tempBudgets = [], weekBudget = 0;
 
 function calcWeekly() {
-  const bmr=parseFloat(document.getElementById('bmr').value);
-  const af=parseFloat(document.getElementById('actFactor').value);
-  const deficit=parseFloat(document.getElementById('weekDeficit').value)||0;
-  if(!bmr){toast('⚠️ أدخل قيمة BMR');return;}
-  const maint=Math.round(bmr*af);
-  weekBudget=maint*7-deficit;
-  const avg=Math.round(weekBudget/7);
-  const pt=calcProtTarget();
-  document.getElementById('r_maint').textContent=maint.toLocaleString();
-  document.getElementById('r_wbudget').textContent=weekBudget.toLocaleString();
-  document.getElementById('r_davg').textContent=avg.toLocaleString();
-  document.getElementById('r_prot_weekly').textContent=pt>0?pt:'—';
-  document.getElementById('r_prot_day').textContent=pt>0?Math.round(pt/7):'—';
-  tempBudgets=Array(7).fill(avg);
-  // Load existing meal plans if week already saved
-  const ws=document.getElementById('weekStart').value;
-  const existing=db.weeks.find(w=>w.start===ws);
-  tempMealPlans=existing&&existing.mealPlans?existing.mealPlans.map(mp=>Array.isArray(mp)?mp:(mp?[mp]:[]))
-    :Array(7).fill(null).map(()=>[]);
-  document.getElementById('planResults').style.display='block';
+  const bmr = parseFloat(document.getElementById('bmr').value);
+  const af = parseFloat(document.getElementById('actFactor').value);
+  const deficit = parseFloat(document.getElementById('weekDeficit').value) || 0;
+  if (!bmr) { toast('⚠️ أدخل قيمة BMR'); return; }
+  const maint = Math.round(bmr * af);
+  weekBudget = maint*7 - deficit;
+  const avg = Math.round(weekBudget/7);
+  const pt = calcProtTarget();
+  document.getElementById('r_maint').textContent = maint.toLocaleString();
+  document.getElementById('r_wbudget').textContent = weekBudget.toLocaleString();
+  document.getElementById('r_davg').textContent = avg.toLocaleString();
+  document.getElementById('r_prot_weekly').textContent = pt > 0 ? pt : '—';
+  document.getElementById('r_prot_day').textContent = pt > 0 ? Math.round(pt/7) : '—';
+  tempBudgets = Array(7).fill(avg);
+  document.getElementById('planResults').style.display = 'block';
   renderPlanner();
-  renderWMP();
 }
 
 function renderPlanner() {
-  const ws=document.getElementById('weekStart').value;
-  const g=document.getElementById('dayPlanner'); g.innerHTML='';
-  tempBudgets.forEach((cal,i)=>{
-    const ds=addDays(ws,i);
-    const isF=cal===0;
-    const c=document.createElement('div');
-    c.className='day-cell'+(isF?' fasting':'');
-    c.innerHTML=`<div class="dn">${DAYS[i]}</div>
+  const ws = document.getElementById('weekStart').value;
+  const g = document.getElementById('dayPlanner'); g.innerHTML = '';
+  tempBudgets.forEach((cal, i) => {
+    const ds = addDays(ws, i);
+    const isF = cal === 0;
+    const c = document.createElement('div');
+    c.className = 'day-cell' + (isF ? ' fasting' : '');
+    c.innerHTML = `<div class="dn">${DAYS[i]}</div>
       <div class="dc" style="color:${isF?'var(--muted)':'var(--accent)'}">${cal.toLocaleString()}</div>
-      ${isF?'<span class="ft">صيام</span>':''}
+      ${isF ? '<span class="ft">صيام</span>' : ''}
       <div style="font-size:9px;color:var(--muted);margin-top:3px;">${fmtDate(ds)}</div>`;
-    c.onclick=()=>editDay(i);
+    c.onclick = () => editDay(i);
     g.appendChild(c);
   });
   updateDistBar();
 }
 
-// Edit cal modal
-let _editIdx=-1;
-function editDay(i){
-  _editIdx=i;
-  document.getElementById('modalTitle').textContent='سعرات يوم '+DAYS[i];
-  document.getElementById('modalInput').value=tempBudgets[i];
-  const m=document.getElementById('editModal');
-  m.style.display='flex';
-  setTimeout(()=>{const inp=document.getElementById('modalInput');inp.focus();inp.select();},80);
+let _editIdx = -1;
+function editDay(i) {
+  _editIdx = i;
+  document.getElementById('modalTitle').textContent = 'سعرات يوم ' + DAYS[i];
+  document.getElementById('modalInput').value = tempBudgets[i];
+  const m = document.getElementById('editModal');
+  m.style.display = 'flex';
+  setTimeout(function(){ var inp=document.getElementById('modalInput'); inp.focus(); inp.select(); }, 80);
 }
-function closeModal(){document.getElementById('editModal').style.display='none';_editIdx=-1;}
-function confirmModal(){
-  if(_editIdx<0)return;
-  const raw=document.getElementById('modalInput').value;
-  tempBudgets[_editIdx]=(raw===''||raw===null)?0:(parseInt(raw)||0);
+function closeModal() {
+  document.getElementById('editModal').style.display = 'none';
+  _editIdx = -1;
+}
+function confirmModal() {
+  if (_editIdx < 0) return;
+  var raw = document.getElementById('modalInput').value;
+  tempBudgets[_editIdx] = (raw === '' || raw === null) ? 0 : (parseInt(raw) || 0);
   closeModal();
   renderPlanner();
-  renderWMP();
 }
-document.addEventListener('click',e=>{ if(e.target===document.getElementById('editModal'))closeModal(); if(e.target===document.getElementById('mealPlanModal'))closeMpModal(); });
-document.addEventListener('keydown',e=>{
-  if(e.key==='Enter'&&_editIdx>=0)confirmModal();
-  if(e.key==='Escape'){closeModal();closeMpModal();}
+document.addEventListener('click', function(e){
+  if (e.target === document.getElementById('editModal')) closeModal();
 });
-
-function distEqual(){const a=Math.round(weekBudget/7);tempBudgets=Array(7).fill(a);renderPlanner();renderWMP();}
-function distIF(){
-  // Monday (index 1) and Thursday (index 4) fasting
-  const d=Math.round(weekBudget/5);
-  tempBudgets=[d,0,d,d,0,d,d];
-  renderPlanner();renderWMP();
-  toast('الصيام المتقطع: الاثنين + الخميس');
-}
-function updateDistBar(){
-  const total=tempBudgets.reduce((a,b)=>a+b,0);
-  const pct=weekBudget>0?Math.min(100,Math.round(total/weekBudget*100)):0;
-  document.getElementById('distLabel').textContent=total.toLocaleString()+' / '+weekBudget.toLocaleString();
-  const bar=document.getElementById('distBar');
-  bar.style.width=pct+'%';
-  bar.className='prog-fill '+(pct>102?'over':'cal');
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && _editIdx >= 0) confirmModal();
+  if (e.key === 'Escape') closeModal();
+});
+function distEqual() { const a=Math.round(weekBudget/7); tempBudgets=Array(7).fill(a); renderPlanner(); }
+function distIF() { const d=Math.round(weekBudget/5); tempBudgets=[d,d,0,d,0,d,d]; renderPlanner(); toast('الصيام المتقطع: الثلاثاء + الخميس'); }
+function updateDistBar() {
+  const total = tempBudgets.reduce((a,b)=>a+b,0);
+  const pct = weekBudget>0 ? Math.min(100,Math.round(total/weekBudget*100)) : 0;
+  document.getElementById('distLabel').textContent = total.toLocaleString()+' / '+weekBudget.toLocaleString();
+  const bar = document.getElementById('distBar');
+  bar.style.width = pct+'%';
+  bar.className = 'prog-fill '+(pct>102?'over':'cal');
 }
 
-// ══════════════════════════════════════════
-//  WEEK MEAL PLANNING GRID (multi-meal per day)
-// ══════════════════════════════════════════
-// tempMealPlans[i] = [] array of {name,cal,prot,notes}
-function renderWMP() {
-  const ws=document.getElementById('weekStart').value;
-  const g=document.getElementById('wmpGrid'); g.innerHTML='';
-  for(let i=0;i<7;i++){
-    const ds=addDays(ws,i);
-    const meals=tempMealPlans[i]||[];
-    const isFasting=tempBudgets[i]===0;
-    const hasMeals=meals.length>0;
-    const totalCal=meals.reduce((s,m)=>s+(m.cal||0),0);
-    const totalProt=meals.reduce((s,m)=>s+(m.prot||0),0);
-    const div=document.createElement('div');
-    div.className='wmp-day'+(hasMeals?' wmp-filled':'')+(isFasting?' wmp-fasting':'');
-    let mealsHtml='';
-    if(hasMeals){
-      mealsHtml=meals.map((m,mi)=>`
-        <div style="display:flex;align-items:center;gap:4px;margin-top:4px;">
-          <div style="flex:1;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${m.name}</div>
-          <button onclick="event.stopPropagation();removeMpMeal(${i},${mi})" style="font-size:10px;background:rgba(239,68,68,.15);border:none;color:#ef4444;border-radius:4px;padding:1px 5px;cursor:pointer;">✕</button>
-        </div>`).join('');
-      mealsHtml+=`<div class="wmp-cal" style="margin-top:5px;">${totalCal.toLocaleString()} سعرة${totalProt?' · '+totalProt+'ج':''}</div>`;
-    }
-    div.innerHTML=`
-      <div class="wmp-dn">${DAYS[i]}<span style="font-size:10px;color:var(--muted);font-weight:400;margin-right:4px;">${fmtDate(ds)}</span></div>
-      ${isFasting?'<div style="color:var(--amber);font-size:12px;text-align:center;padding:4px;">🚫 صيام</div>'
-        :`${mealsHtml}<button onclick="event.stopPropagation();openMpModal(${i})" style="margin-top:6px;width:100%;padding:5px;background:rgba(59,130,246,.1);border:1px dashed rgba(59,130,246,.3);border-radius:6px;color:var(--accent);font-size:11px;cursor:pointer;font-family:'IBM Plex Sans Arabic',sans-serif;">＋ ${hasMeals?'إضافة وجبة':'تحديد وجبة'}</button>`}`;
-    g.appendChild(div);
-  }
-}
-
-function removeMpMeal(dayIdx,mealIdx){
-  if(!tempMealPlans[dayIdx])return;
-  tempMealPlans[dayIdx].splice(mealIdx,1);
-  renderWMP();
-}
-
-// Meal plan modal state
-let _mpIdx=-1;
-function openMpModal(i){
-  _mpIdx=i;
-  const ws=document.getElementById('weekStart').value;
-  const ds=addDays(ws,i);
-  document.getElementById('mpModalTitle').textContent='إضافة وجبة ليوم '+DAYS[i];
-  document.getElementById('mpModalSub').textContent=fmtDateFull(ds)+((tempMealPlans[i]&&tempMealPlans[i].length)?' · '+tempMealPlans[i].length+' وجبة مضافة':'');
-  document.getElementById('mpMealName').value='';
-  document.getElementById('mpMealCal').value='';
-  document.getElementById('mpMealProt').value='';
-  document.getElementById('mpMealNotes').value='';
-  buildMpDD();
-  document.getElementById('mealPlanModal').style.display='flex';
-  setTimeout(()=>document.getElementById('mpMealName').focus(),80);
-}
-function closeMpModal(){document.getElementById('mealPlanModal').style.display='none';_mpIdx=-1;}
-function saveMealPlan(){
-  if(_mpIdx<0)return;
-  const name=document.getElementById('mpMealName').value.trim();
-  const cal=parseInt(document.getElementById('mpMealCal').value)||0;
-  const prot=parseInt(document.getElementById('mpMealProt').value)||0;
-  const notes=document.getElementById('mpMealNotes').value.trim();
-  if(!name){toast('⚠️ أدخل اسم الوجبة');return;}
-  if(!tempMealPlans[_mpIdx])tempMealPlans[_mpIdx]=[];
-  tempMealPlans[_mpIdx].push({name,cal,prot,notes});
-  closeMpModal();
-  renderWMP();
-  toast('✅ أُضيفت وجبة ليوم '+DAYS[_mpIdx]);
-}
-
-function buildMpDD(){
-  const sel=document.getElementById('mpPresetDD');
-  sel.innerHTML='<option value="">— اختر —</option>';
-  for(const grp of db.presets){
-    const og=document.createElement('optgroup');
-    og.label='🍽️ '+grp.name;
-    for(const item of grp.items){
-      const o=document.createElement('option');
-      o.value=JSON.stringify({gid:grp.id,iid:item.id,name:item.name,cal:item.cal,prot:item.prot});
-      o.textContent=(item.code?'['+item.code+'] ':'')+item.name+' — '+item.cal+' سعرة'+(item.prot?' | '+item.prot+'ج':'');
-      og.appendChild(o);
-    }
-    sel.appendChild(og);
-  }
-}
-function mpSelectPreset(sel){
-  if(!sel.value)return;
-  try{
-    const d=JSON.parse(sel.value);
-    sel.value='';
-    if(d.gid && d.iid){
-      _mpIngMode=true;
-      // Hide plan modal temporarily — ingModal will reopen it on confirm
-      document.getElementById('mealPlanModal').style.display='none';
-      openIngModal(d.gid, d.iid);
-    } else {
-      document.getElementById('mpMealName').value=d.name;
-      document.getElementById('mpMealCal').value=d.cal||'';
-      document.getElementById('mpMealProt').value=d.prot||'';
-    }
-  }catch(e){}
-}
-let _mpIngMode=false;
-
-// ══════════════════════════════════════════
-//  SAVE WEEK
-// ══════════════════════════════════════════
-function saveWeek(){
-  const ws=document.getElementById('weekStart').value;
-  if(!ws){toast('⚠️ حدد تاريخ البداية');return;}
-  const pt=calcProtTarget();
-  db.weeks=db.weeks.filter(w=>w.start!==ws);
+function saveWeek() {
+  const ws = document.getElementById('weekStart').value;
+  if (!ws) { toast('⚠️ حدد تاريخ البداية'); return; }
+  const pt = calcProtTarget();
+  db.weeks = db.weeks.filter(w => w.start !== ws);
   db.weeks.push({
-    start:ws,
-    weight:parseFloat(document.getElementById('curWeight').value)||null,
-    bmr:parseFloat(document.getElementById('bmr').value),
-    activityFactor:parseFloat(document.getElementById('actFactor').value),
-    deficit:parseFloat(document.getElementById('weekDeficit').value)||0,
-    budget:weekBudget,
-    protWeekly:pt,
-    days:tempBudgets.map((cal,i)=>({date:addDays(ws,i),planned:cal})),
-    mealPlans:tempMealPlans.map(arr=>Array.isArray(arr)?arr:[]),
-    savedAt:new Date().toISOString()
+    start: ws,
+    weight: parseFloat(document.getElementById('curWeight').value)||null,
+    bmr: parseFloat(document.getElementById('bmr').value),
+    activityFactor: parseFloat(document.getElementById('actFactor').value),
+    deficit: parseFloat(document.getElementById('weekDeficit').value)||0,
+    budget: weekBudget,
+    protWeekly: pt,
+    days: tempBudgets.map((cal,i) => ({ date: addDays(ws,i), planned: cal })),
+    savedAt: new Date().toISOString()
   });
   db.weeks.sort((a,b)=>a.start.localeCompare(b.start));
   saveDB();
-  toast('✅ تم حفظ الخطة الكاملة');
+  toast('✅ تم حفظ الخطة');
   loadStats(); loadHistory();
 }
 
-// ══════════════════════════════════════════
-//  PRINT
-// ══════════════════════════════════════════
-function buildPrintRows(ws,mealPlansArr,budgets){
-  const tbody=document.getElementById('printBody');
-  tbody.innerHTML='';
-  for(let i=0;i<7;i++){
-    const ds=addDays(ws,i);
-    const meals=Array.isArray(mealPlansArr[i])?mealPlansArr[i]:(mealPlansArr[i]?[mealPlansArr[i]]:[]);
-    const isFasting=budgets[i]===0;
-    const totalCal=meals.reduce((s,m)=>s+(m.cal||0),0);
-    const totalProt=meals.reduce((s,m)=>s+(m.prot||0),0);
-    const tr=document.createElement('tr');
-    if(isFasting)tr.className='fasting-row';
-    const namesHtml=isFasting?'🚫 يوم صيام':(meals.length?meals.map(m=>(m.code?'<strong>['+m.code+']</strong> ':'')+m.name).join('<br>') :'—');
-    tr.innerHTML=`
-      <td><strong>${DAYS[i]}</strong></td>
-      <td>${fmtDateFull(ds)}</td>
-      <td>${namesHtml}</td>
-      <td style="text-align:center;">${isFasting?'—':(totalCal?totalCal.toLocaleString():budgets[i].toLocaleString())}</td>
-      <td style="text-align:center;">${isFasting?'—':(totalProt||'—')}</td>`;
-    tbody.appendChild(tr);
-  }
-}
-function printWeekPlan(){
-  const ws=document.getElementById('weekStart').value;
-  if(!ws){toast('⚠️ احسب الخطة أولاً');return;}
-  document.getElementById('printTitle').textContent='خطة وجبات الأسبوع';
-  document.getElementById('printSubtitle').textContent='من '+fmtDateFull(ws)+' إلى '+fmtDateFull(addDays(ws,6));
-  buildPrintRows(ws,tempMealPlans,tempBudgets);
-  document.getElementById('printFooter').textContent='طُبع بواسطة ProDiet Tracker · '+new Date().toLocaleDateString('en-GB');
-  window.print();
-}
-
-// ══════════════════════════════════════════
+// ══════════════════════════════════════════════
 //  DAY LOG
-// ══════════════════════════════════════════
-function loadDay(){
-  const date=document.getElementById('logDate').value;
-  if(!date)return;
-  const ws=weekStart(date);
-  const week=db.weeks.find(w=>w.start===ws);
-  const di=dow(date);
-  let targetCal=null;
-  if(week){const dp=week.days[di];targetCal=dp?dp.planned:null;}
-  const dd=db.days[date]||{meals:[]};
-  const consCal=dd.meals.reduce((s,m)=>s+(m.cal||0),0);
-  const remCal=targetCal!==null?targetCal-consCal:null;
+// ══════════════════════════════════════════════
+function loadDay() {
+  const date = document.getElementById('logDate').value;
+  if (!date) return;
+  const ws = weekStart(date);
+  const week = db.weeks.find(w => w.start === ws);
+  const di = dow(date);
+  let targetCal = null;
+  if (week) { const dp = week.days[di]; targetCal = dp ? dp.planned : null; }
+  const dd = db.days[date] || { meals: [] };
+  const consCal = dd.meals.reduce((s,m)=>s+(m.cal||0), 0);
+  const remCal = targetCal !== null ? targetCal - consCal : null;
 
-  document.getElementById('lTargetCal').textContent=targetCal!==null?targetCal.toLocaleString():'—';
-  document.getElementById('lConsumedCal').textContent=consCal.toLocaleString();
-  document.getElementById('lRemCal').textContent=remCal!==null?remCal.toLocaleString():'—';
-  const calPct=targetCal?Math.min(100,Math.round(consCal/targetCal*100)):0;
-  document.getElementById('lCalPct').textContent=calPct+'%';
-  const calBar=document.getElementById('lCalBar');
-  calBar.style.width=calPct+'%';
-  calBar.className='prog-fill '+(calPct>100?'over':'cal');
+  document.getElementById('lTargetCal').textContent = targetCal!==null ? targetCal.toLocaleString() : '—';
+  document.getElementById('lConsumedCal').textContent = consCal.toLocaleString();
+  document.getElementById('lRemCal').textContent = remCal!==null ? remCal.toLocaleString() : '—';
+  const calPct = targetCal ? Math.min(100,Math.round(consCal/targetCal*100)) : 0;
+  document.getElementById('lCalPct').textContent = calPct+'%';
+  const calBar = document.getElementById('lCalBar');
+  calBar.style.width = calPct+'%';
+  calBar.className = 'prog-fill '+(calPct>100?'over':'cal');
 
-  // Show planned meals for this day (array support)
-  const plannedArea=document.getElementById('plannedMealArea');
-  const mpArr=week&&week.mealPlans?
-    (Array.isArray(week.mealPlans[di])?week.mealPlans[di]:(week.mealPlans[di]?[week.mealPlans[di]]:[]))
-    :[];
-  if(mpArr.length>0){
-    const planTotalCal=mpArr.reduce((s,m)=>s+(m.cal||0),0);
-    const planTotalProt=mpArr.reduce((s,m)=>s+(m.prot||0),0);
-    const diff=planTotalCal>0?consCal-planTotalCal:null;
-    const remCal2=targetCal!==null?targetCal-consCal:null;
-    let diffColor=diff===null?'var(--muted)':Math.abs(diff)<=50?'var(--green)':diff>0?'var(--danger)':'var(--amber)';
-    const diffSign=diff!==null?(diff>0?'+':''):'' ;
-    const mealsListHtml=mpArr.map(m=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(36,48,68,.4);">
-      <span style="font-size:14px;font-weight:500;">${m.name}</span>
-      <span style="font-family:var(--mono);font-size:13px;color:var(--accent);">${m.cal?m.cal.toLocaleString()+' سعرة':''} ${m.prot?'<span style="color:var(--prot)">'+m.prot+'ج</span>':''}</span>
-    </div>`).join('');
-    plannedArea.style.display='block';
-    plannedArea.innerHTML=`<div class="planned-meal-card">
-      <div class="pm-label">🗓️ الوجبات المخططة (${mpArr.length})</div>
-      ${mealsListHtml}
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px;">
-        <div style="background:rgba(59,130,246,.1);border-radius:8px;padding:8px;text-align:center;">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:3px;">مخطط</div>
-          <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--accent);">${planTotalCal.toLocaleString()}</div>
-        </div>
-        <div style="background:rgba(16,185,129,.1);border-radius:8px;padding:8px;text-align:center;">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:3px;">فعلي اليوم</div>
-          <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--green);">${consCal.toLocaleString()}</div>
-        </div>
-        <div style="background:rgba(168,85,247,.08);border-radius:8px;padding:8px;text-align:center;">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:3px;">${diff!==null?(diff>50?'⚠️ زيادة':diff<-50?'✅ أقل من المخطط':'✅ في الهدف'):'الفرق'}</div>
-          <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:${diffColor};">${diff!==null?diffSign+diff:'—'}</div>
-        </div>
-      </div>
-      ${remCal2!==null?`<div style="margin-top:10px;padding:8px 12px;background:rgba(245,158,11,.08);border-radius:8px;display:flex;justify-content:space-between;align-items:center;">
-        <span style="font-size:13px;color:var(--muted);">متبقي من ميزانية اليوم</span>
-        <span style="font-family:var(--mono);font-size:16px;font-weight:700;color:${remCal2<0?'var(--danger)':'var(--amber)'};">${remCal2.toLocaleString()} سعرة</span>
-      </div>`:''}
-    </div>`;
+  // Protein weekly banner
+  if (week && week.protWeekly > 0) {
+    const banner = document.getElementById('protBanner');
+    banner.style.display = 'block';
+    // Sum protein for entire week so far
+    const weekProt = week.days.reduce((s,d) => {
+      const dd2 = db.days[d.date] || { meals: [] };
+      return s + dd2.meals.reduce((ss,m)=>ss+(m.prot||0),0);
+    }, 0);
+    const protRem = week.protWeekly - weekProt;
+    const protPct = Math.min(100, Math.round(weekProt/week.protWeekly*100));
+    document.getElementById('protWeekConsumed').textContent = weekProt;
+    document.getElementById('protWeekTarget').textContent = week.protWeekly;
+    document.getElementById('protWeekRem').textContent = protRem > 0 ? protRem : '✅ اكتمل';
+    document.getElementById('protWeekPct').textContent = protPct+'%';
+    const pb = document.getElementById('protWeekBar');
+    pb.style.width = protPct+'%';
+    pb.className = 'prog-fill '+(protPct>=100?'over':'prot');
   } else {
-    plannedArea.style.display='none';
-  }
-
-  // Protein banner
-  if(week&&week.protWeekly>0){
-    document.getElementById('protBanner').style.display='block';
-    const weekProt=week.days.reduce((s,d)=>{
-      const dd2=db.days[d.date]||{meals:[]};
-      return s+dd2.meals.reduce((ss,m)=>ss+(m.prot||0),0);
-    },0);
-    const protRem=week.protWeekly-weekProt;
-    const protPct=Math.min(100,Math.round(weekProt/week.protWeekly*100));
-    document.getElementById('protWeekConsumed').textContent=weekProt;
-    document.getElementById('protWeekTarget').textContent=week.protWeekly;
-    document.getElementById('protWeekRem').textContent=protRem>0?protRem:'✅ اكتمل';
-    document.getElementById('protWeekPct').textContent=protPct+'%';
-    const pb=document.getElementById('protWeekBar');
-    pb.style.width=protPct+'%';
-    pb.className='prog-fill '+(protPct>=100?'over':'prot');
-  } else {
-    document.getElementById('protBanner').style.display='none';
+    document.getElementById('protBanner').style.display = 'none';
   }
 
   renderMeals(date);
-  loadWeekOverview();
 }
 
-function renderMeals(date){
-  const dd=db.days[date]||{meals:[]};
-  const el=document.getElementById('mealList');
-  if(!dd.meals.length){
-    el.innerHTML='<p style="color:var(--muted);font-size:14px;text-align:center;padding:20px;">لا توجد وجبات مسجلة اليوم</p>';
+function renderMeals(date) {
+  const dd = db.days[date] || { meals: [] };
+  const el = document.getElementById('mealList');
+  if (!dd.meals.length) {
+    el.innerHTML = '<p style="color:var(--muted);font-size:14px;text-align:center;padding:20px;">لا توجد وجبات مسجلة</p>';
     return;
   }
-  el.innerHTML=dd.meals.map((m,i)=>`
+  el.innerHTML = dd.meals.map((m,i) => `
     <div class="meal-row">
       <div class="meal-info">
         <div class="meal-nm">${m.name}</div>
@@ -1365,73 +688,73 @@ function renderMeals(date){
     </div>`).join('');
 }
 
-function addMeal(){
-  const date=document.getElementById('logDate').value;
-  const name=document.getElementById('mealName').value.trim();
-  const cal=parseInt(document.getElementById('mealCal').value);
-  const prot=parseInt(document.getElementById('mealProt').value)||0;
-  if(!name){toast('⚠️ أدخل اسم الوجبة');return;}
-  if(!cal&&cal!==0){toast('⚠️ أدخل السعرات');return;}
-  if(!db.days[date])db.days[date]={meals:[]};
-  db.days[date].meals.push({name,cal,prot,time:new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})});
-  saveDB();
-  document.getElementById('mealName').value='';
-  document.getElementById('mealCal').value='';
-  document.getElementById('mealProt').value='';
-  loadDay(); loadWeekOverview();
-  toast('✅ '+name+' ('+cal+' سعرة)');
-}
-function removeMeal(date,idx){
-  if(!db.days[date])return;
-  const meal=db.days[date].meals[idx];
-  if(!confirm('حذف "'+meal.name+'" من السجل؟'))return;
-  db.days[date].meals.splice(idx,1);
-  saveDB();loadDay();loadWeekOverview();toast('🗑️ تم حذف '+meal.name);
-}
-
-// ══════════════════════════════════════════
-//  PRESET DROPDOWNS
-// ══════════════════════════════════════════
-function buildDDs(){
-  [document.getElementById('presetDD')].forEach(sel=>{
-    sel.innerHTML='<option value="">— اختر مجموعة / وجبة —</option>';
-    for(const grp of db.presets){
-      const og=document.createElement('optgroup');
-      og.label='🍽️ '+grp.name;
-      for(const item of grp.items){
-        const o=document.createElement('option');
-        o.value=JSON.stringify({gid:grp.id,iid:item.id,name:item.name,cal:item.cal,prot:item.prot});
-        o.textContent=(item.code?'['+item.code+'] ':'')+item.name+' — '+item.cal+' سعرة'+(item.prot?' | '+item.prot+'ج':'');
-        og.appendChild(o);
-      }
-      sel.appendChild(og);
-    }
+function addMeal() {
+  const date = document.getElementById('logDate').value;
+  const name = document.getElementById('mealName').value.trim();
+  const cal = parseInt(document.getElementById('mealCal').value);
+  const prot = parseInt(document.getElementById('mealProt').value)||0;
+  if (!name) { toast('⚠️ أدخل اسم الوجبة'); return; }
+  if (!cal && cal!==0) { toast('⚠️ أدخل السعرات'); return; }
+  if (!db.days[date]) db.days[date] = { meals: [] };
+  db.days[date].meals.push({
+    name, cal, prot,
+    time: new Date().toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'})
   });
-}
-function selectPreset(sel){
-  if(!sel.value)return;
-  try{
-    const d=JSON.parse(sel.value);
-    sel.value='';
-    // Open ingredient editor if item has ingredients
-    if(d.gid && d.iid){
-      openIngModal(d.gid, d.iid);
-    } else {
-      // fallback: simple fill
-      document.getElementById('mealName').value=d.name;
-      document.getElementById('mealCal').value=d.cal;
-      document.getElementById('mealProt').value=d.prot||'';
-    }
-  }catch(e){}
+  saveDB();
+  document.getElementById('mealName').value = '';
+  document.getElementById('mealCal').value = '';
+  document.getElementById('mealProt').value = '';
+  loadDay();
+  toast('✅ ' + name + ' (' + cal + ' سعرة)');
 }
 
-// ══════════════════════════════════════════
+function removeMeal(date, idx) {
+  if (!db.days[date]) return;
+  db.days[date].meals.splice(idx,1);
+  saveDB(); loadDay(); toast('🗑️ تم الحذف');
+}
+
+// ══════════════════════════════════════════════
+//  PRESET DROPDOWN
+// ══════════════════════════════════════════════
+function buildDD() {
+  const sel = document.getElementById('presetDD');
+  sel.innerHTML = '<option value="">— اختر مجموعة / وجبة —</option>';
+  for (const grp of db.presets) {
+    const og = document.createElement('optgroup');
+    og.label = '🍽️ ' + grp.name;
+    for (const item of grp.items) {
+      const o = document.createElement('option');
+      o.value = JSON.stringify({name:item.name,cal:item.cal,prot:item.prot});
+      o.textContent = item.name + ' — ' + item.cal + ' سعرة' + (item.prot?' | '+item.prot+'ج':'');
+      og.appendChild(o);
+    }
+    sel.appendChild(og);
+  }
+}
+
+function selectPreset(sel) {
+  if (!sel.value) return;
+  try {
+    const d = JSON.parse(sel.value);
+    document.getElementById('mealName').value = d.name;
+    document.getElementById('mealCal').value = d.cal;
+    document.getElementById('mealProt').value = d.prot||'';
+    toast('✅ ' + d.name);
+    sel.value = '';
+  } catch(e) {}
+}
+
+// ══════════════════════════════════════════════
 //  PRESET MANAGER
-// ══════════════════════════════════════════
-function renderPM(){
-  const area=document.getElementById('pmArea');
-  if(!db.presets.length){area.innerHTML='<p style="color:var(--muted);font-size:14px;text-align:center;padding:20px;">لا توجد مجموعات.</p>';return;}
-  area.innerHTML=db.presets.map(grp=>`
+// ══════════════════════════════════════════════
+function renderPM() {
+  const area = document.getElementById('pmArea');
+  if (!db.presets.length) {
+    area.innerHTML = '<p style="color:var(--muted);font-size:14px;text-align:center;padding:20px;">لا توجد مجموعات.</p>';
+    return;
+  }
+  area.innerHTML = db.presets.map(grp => `
     <div class="pm-group">
       <div class="pm-hdr" onclick="toggleGrp('${grp.id}')">
         <div class="pm-hdr-l">
@@ -1444,119 +767,136 @@ function renderPM(){
         </div>
       </div>
       <div class="pm-body" id="body-${grp.id}">
-        ${grp.items.map(item=>`
+        ${grp.items.map(item => `
           <div class="pm-item">
-            ${item.code?`<div style="font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:3px 7px;flex-shrink:0;letter-spacing:.05em;">${item.code}</div>`:''}
             <div class="pm-in">
               <div class="pm-nm">${item.name}</div>
-              <div class="pm-sb">${item.cal} سعرة${item.prot?' | '+item.prot+' ج بروتين':''} ${item.ingredients&&item.ingredients.length?'<span style="color:var(--green);font-size:10px;">· '+item.ingredients.length+' مكونات</span>':''}</div>
+              <div class="pm-sb">${item.cal} سعرة${item.prot?' | '+item.prot+' ج بروتين':''}</div>
             </div>
             <button class="pm-sel" onclick="selFromPM('${grp.id}','${item.id}')">اختيار</button>
-            <button class="pm-ed" onclick="editItem('${grp.id}','${item.id}')">تعديل</button>
             <button class="pm-dl" onclick="delItem('${grp.id}','${item.id}')">حذف</button>
           </div>`).join('')}
         <div class="pm-add-row">
-          <p style="font-size:12px;color:var(--muted);margin-bottom:8px;">إضافة وجبة لـ "${grp.name}"</p>
-          <div class="pm-add-g" style="grid-template-columns:70px 1fr auto;">
-            <div class="field"><label>الكود</label><input type="text" id="nk-${grp.id}" placeholder="R01" maxlength="5" style="font-family:monospace;font-size:13px;"></div>
-            <div class="field"><label>اسم الوجبة</label><input type="text" id="ni-${grp.id}" placeholder="اسم الوجبة"></div>
-            <div class="field"><label>&nbsp;</label><button class="btn btn-success btn-sm" onclick="addItem('${grp.id}')">إضافة ←</button></div>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:8px;">إضافة وجبة جديدة لـ "${grp.name}"</p>
+          <div class="pm-add-g">
+            <div class="field"><label>الاسم</label><input type="text" id="ni-${grp.id}" placeholder="اسم الوجبة"></div>
+            <div class="field"><label>السعرات</label><input type="number" id="nc-${grp.id}" placeholder="0"></div>
+            <div class="field"><label>البروتين (ج)</label><input type="number" id="np-${grp.id}" placeholder="0"></div>
+            <div class="field"><label>&nbsp;</label><button class="btn btn-success btn-sm" onclick="addItem('${grp.id}')">إضافة</button></div>
           </div>
-          <input type="hidden" id="nc-${grp.id}"><input type="hidden" id="np-${grp.id}">
-          <p style="font-size:11px;color:var(--muted);margin-top:6px;">ستفتح نافذة المكونات تلقائياً بعد الإضافة</p>
         </div>
       </div>
     </div>`).join('');
 }
-function toggleGrp(id){
-  const b=document.getElementById('body-'+id);
-  const a=document.getElementById('arr-'+id);
-  b.classList.toggle('open');a.classList.toggle('open');
-  a.textContent=a.classList.contains('open')?'▼':'▶';
+
+function toggleGrp(id) {
+  const b = document.getElementById('body-'+id);
+  const a = document.getElementById('arr-'+id);
+  b.classList.toggle('open');
+  a.classList.toggle('open');
+  a.textContent = a.classList.contains('open') ? '▼' : '▶';
 }
-function showAddGroup(){document.getElementById('addGrpCard').style.display='block';document.getElementById('newGrpName').focus();}
-function addGroup(){
-  const name=document.getElementById('newGrpName').value.trim();
-  if(!name){toast('⚠️ أدخل اسم المجموعة');return;}
-  db.presets.push({id:uid(),name,items:[]});
+
+function showAddGroup() {
+  document.getElementById('addGrpCard').style.display = 'block';
+  document.getElementById('newGrpName').focus();
+}
+
+function addGroup() {
+  const name = document.getElementById('newGrpName').value.trim();
+  if (!name) { toast('⚠️ أدخل اسم المجموعة'); return; }
+  db.presets.push({ id:uid(), name, items:[] });
   saveDB();
-  document.getElementById('newGrpName').value='';
-  document.getElementById('addGrpCard').style.display='none';
-  renderPM();buildDDs();toast('✅ '+name);
+  document.getElementById('newGrpName').value = '';
+  document.getElementById('addGrpCard').style.display = 'none';
+  renderPM(); buildDD();
+  toast('✅ ' + name);
 }
-function delGroup(gid){
-  const g=db.presets.find(g=>g.id===gid);
-  if(!confirm('حذف "'+g.name+'" وكل وجباتها؟'))return;
-  db.presets=db.presets.filter(g=>g.id!==gid);
-  saveDB();renderPM();buildDDs();toast('🗑️ تم الحذف');
+
+function delGroup(gid) {
+  const g = db.presets.find(g=>g.id===gid);
+  if (!confirm('حذف "'+g.name+'" وكل وجباتها؟')) return;
+  db.presets = db.presets.filter(g=>g.id!==gid);
+  saveDB(); renderPM(); buildDD(); toast('🗑️ تم الحذف');
 }
-function addItem(gid){
-  const code=document.getElementById('nk-'+gid).value.trim().toUpperCase();
-  const name=document.getElementById('ni-'+gid).value.trim();
-  if(!name){toast('⚠️ أدخل الاسم');return;}
-  const g=db.presets.find(g=>g.id===gid);
-  if(!g)return;
-  const newItem={id:uid(),code,name,cal:0,prot:0,ingredients:[]};
-  g.items.push(newItem);
-  document.getElementById('nk-'+gid).value='';
-  document.getElementById('ni-'+gid).value='';
-  saveDB();renderPM();buildDDs();
-  // editItem reads from db — no DOM dependency
-  editItem(gid, newItem.id);
+
+function addItem(gid) {
+  const name = document.getElementById('ni-'+gid).value.trim();
+  const cal = parseInt(document.getElementById('nc-'+gid).value)||0;
+  const prot = parseInt(document.getElementById('np-'+gid).value)||0;
+  if (!name) { toast('⚠️ أدخل الاسم'); return; }
+  const g = db.presets.find(g=>g.id===gid);
+  if (!g) return;
+  g.items.push({ id:uid(), name, cal, prot });
+  saveDB(); renderPM(); buildDD();
+  toast('✅ ' + name);
 }
-function delItem(gid,iid){
-  const g=db.presets.find(g=>g.id===gid);
-  if(!g)return;
-  const item=g.items.find(i=>i.id===iid);
-  if(!item)return;
-  if(!confirm('حذف "'+item.name+'" نهائياً؟'))return;
-  g.items=g.items.filter(i=>i.id!==iid);
-  saveDB();renderPM();buildDDs();toast('🗑️ تم حذف '+item.name);
+
+function delItem(gid, iid) {
+  const g = db.presets.find(g=>g.id===gid);
+  if (!g) return;
+  g.items = g.items.filter(i=>i.id!==iid);
+  saveDB(); renderPM(); buildDD(); toast('🗑️ تم الحذف');
 }
-function selFromPM(gid,iid){
+
+function selFromPM(gid, iid) {
+  const g = db.presets.find(g=>g.id===gid);
+  if (!g) return;
+  const item = g.items.find(i=>i.id===iid);
+  if (!item) return;
   switchTab('log');
-  setTimeout(()=>openIngModal(gid,iid),80);
+  document.getElementById('mealName').value = item.name;
+  document.getElementById('mealCal').value = item.cal;
+  document.getElementById('mealProt').value = item.prot||'';
+  toast('✅ ' + item.name + ' — جاهز للإضافة');
 }
 
-// ══════════════════════════════════════════
+// ══════════════════════════════════════════════
 //  STATS
-// ══════════════════════════════════════════
-function dayProt(date){const d=db.days[date];if(!d)return 0;return d.meals.reduce((s,m)=>s+(m.prot||0),0);}
-function dayCal(date){const d=db.days[date];if(!d)return 0;return d.meals.reduce((s,m)=>s+(m.cal||0),0);}
-function weekCal(w){return w.days.reduce((s,d)=>s+dayCal(d.date),0);}
-function weekProtConsumed(w){return w.days.reduce((s,d)=>s+dayProt(d.date),0);}
+// ══════════════════════════════════════════════
+function dayProt(date) {
+  const d = db.days[date]; if (!d) return 0;
+  return d.meals.reduce((s,m)=>s+(m.prot||0),0);
+}
+function dayCal(date) {
+  const d = db.days[date]; if (!d) return 0;
+  return d.meals.reduce((s,m)=>s+(m.cal||0),0);
+}
+function weekCal(w) { return w.days.reduce((s,d)=>s+dayCal(d.date),0); }
+function weekProtConsumed(w) { return w.days.reduce((s,d)=>s+dayProt(d.date),0); }
 
-function loadStats(){
-  document.getElementById('st_weeks').textContent=db.weeks.length;
-  let totalDef=0;
-  db.weeks.forEach(w=>{
-    const maint=Math.round(w.bmr*w.activityFactor)*7;
-    totalDef+=Math.max(0,maint-weekCal(w));
+function loadStats() {
+  document.getElementById('st_weeks').textContent = db.weeks.length;
+  let totalDef = 0;
+  db.weeks.forEach(w => {
+    const maint = Math.round(w.bmr*w.activityFactor)*7;
+    totalDef += Math.max(0, maint - weekCal(w));
   });
-  document.getElementById('st_deficit').textContent=totalDef.toLocaleString();
-  document.getElementById('st_kg').textContent=(totalDef/7700).toFixed(1);
+  document.getElementById('st_deficit').textContent = totalDef.toLocaleString();
+  document.getElementById('st_kg').textContent = (totalDef/7700).toFixed(1);
 
-  const t=today();
-  const ws=weekStart(t);
-  const cw=db.weeks.find(w=>w.start===ws);
+  const t = today();
+  const ws = weekStart(t);
+  const cw = db.weeks.find(w=>w.start===ws);
 
-  const calArea=document.getElementById('weekCalArea');
-  if(cw){
-    const cells=cw.days.map(d=>{
-      const act=dayCal(d.date);
-      const future=d.date>t;
+  // Calories progress
+  const calArea = document.getElementById('weekCalArea');
+  if (cw) {
+    const cells = cw.days.map(d => {
+      const act = dayCal(d.date);
+      const future = d.date > t;
       return `<div class="day-cell ${d.date===t?'today':''} ${d.planned===0?'fasting':''}" style="cursor:default;">
         <div class="dn">${DAYS[dow(d.date)]}</div>
         <div class="dc">${d.planned.toLocaleString()}</div>
-        ${!future&&d.planned>0?'<div class="da">'+act.toLocaleString()+'</div>':''}
-        ${d.planned===0?'<span class="ft">صيام</span>':''}
+        ${!future && d.planned>0 ? '<div class="da">'+act.toLocaleString()+'</div>' : ''}
+        ${d.planned===0 ? '<span class="ft">صيام</span>' : ''}
       </div>`;
     }).join('');
-    const actSoFar=cw.days.filter(d=>d.date<=t).reduce((s,d)=>s+dayCal(d.date),0);
-    const planSoFar=cw.days.filter(d=>d.date<=t).reduce((s,d)=>s+d.planned,0);
-    const pct=planSoFar>0?Math.min(100,Math.round(actSoFar/planSoFar*100)):0;
-    const status=pct<90?'🟢 تحت المستهدف':pct<=105?'🟡 في المستهدف':'🔴 تجاوز';
-    calArea.innerHTML=`<div class="week-grid">${cells}</div>
+    const actSoFar = cw.days.filter(d=>d.date<=t).reduce((s,d)=>s+dayCal(d.date),0);
+    const planSoFar = cw.days.filter(d=>d.date<=t).reduce((s,d)=>s+d.planned,0);
+    const pct = planSoFar>0 ? Math.min(100,Math.round(actSoFar/planSoFar*100)) : 0;
+    const status = pct<90?'🟢 تحت المستهدف':pct<=105?'🟡 في المستهدف':'🔴 تجاوز';
+    calArea.innerHTML = `<div class="week-grid">${cells}</div>
       <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:12px;">
         <span>${status}</span><span>${actSoFar.toLocaleString()} / ${planSoFar.toLocaleString()} سعرة</span>
       </div>
@@ -1565,76 +905,80 @@ function loadStats(){
       </div>`;
   }
 
-  const protArea=document.getElementById('weekProtArea');
-  if(cw&&cw.protWeekly>0){
-    const consumed=weekProtConsumed(cw);
-    const pct=Math.min(100,Math.round(consumed/cw.protWeekly*100));
-    const rem=cw.protWeekly-consumed;
-    const daysPassed=cw.days.filter(d=>d.date<=t).length;
-    const dayRem=7-daysPassed;
-    const dailyNeeded=dayRem>0?Math.round(rem/dayRem):0;
-    protArea.innerHTML=`
+  // Protein weekly progress
+  const protArea = document.getElementById('weekProtArea');
+  if (cw && cw.protWeekly > 0) {
+    const consumed = weekProtConsumed(cw);
+    const pct = Math.min(100, Math.round(consumed/cw.protWeekly*100));
+    const rem = cw.protWeekly - consumed;
+    const daysPassed = cw.days.filter(d=>d.date<=t).length;
+    const dayRem = 7 - daysPassed;
+    const dailyNeeded = dayRem>0 ? Math.round(rem/dayRem) : 0;
+    protArea.innerHTML = `
       <div class="g3" style="margin-bottom:16px;">
         <div class="stat-box purple"><div class="val">${cw.protWeekly}</div><div class="lbl">الهدف الأسبوعي (جم)</div></div>
-        <div class="stat-box green"><div class="val">${consumed}</div><div class="lbl">المستهلك (جم)</div></div>
-        <div class="stat-box ${rem>0?'amber':'green'}"><div class="val">${rem>0?rem:'✅'}</div><div class="lbl">المتبقي (جم)</div></div>
+        <div class="stat-box green"><div class="val">${consumed}</div><div class="lbl">المستهلك حتى الآن (جم)</div></div>
+        <div class="stat-box ${rem>0?'amber':'green'}"><div class="val">${rem>0?rem:'✅'}</div><div class="lbl">المتبقي للأسبوع (جم)</div></div>
       </div>
       <div class="prog-wrap">
         <div class="prog-label"><span style="color:var(--prot)">التقدم الأسبوعي</span><span>${pct}%</span></div>
         <div class="prog-bar" style="height:12px;"><div class="prog-fill ${pct>=100?'over':'prot'}" style="width:${pct}%"></div></div>
       </div>
-      ${dayRem>0&&rem>0?`<p style="font-size:13px;color:var(--muted);margin-top:10px;">📌 المطلوب: <strong style="color:var(--prot)">${dailyNeeded} جم/يوم</strong> للأيام الـ${dayRem} المتبقية</p>`:''}`;
+      ${dayRem>0 && rem>0 ? `<p style="font-size:13px;color:var(--muted);margin-top:10px;">📌 لتحقيق الهدف: <strong style="color:var(--prot)">${dailyNeeded} جم/يوم</strong> للأيام الـ${dayRem} المتبقية</p>` : ''}`;
   } else {
-    protArea.innerHTML='<p style="color:var(--muted);font-size:14px;text-align:center;padding:16px;">حدد هدف البروتين في خطة الأسبوع</p>';
+    protArea.innerHTML = '<p style="color:var(--muted);font-size:14px;text-align:center;padding:16px;">حدد هدف البروتين في خطة الأسبوع</p>';
   }
 
-  const wc=document.getElementById('weightChart');
-  const wd=db.weeks.filter(w=>w.weight).map(w=>({date:w.start,weight:w.weight}));
-  if(wd.length>0){
-    const maxW=Math.max(...wd.map(w=>w.weight));
-    const minW=Math.min(...wd.map(w=>w.weight));
-    const range=maxW-minW||1;
-    const bars=wd.map(w=>{
-      const h=Math.round(((w.weight-minW)/range)*50+10);
+  // Weight chart
+  const wc = document.getElementById('weightChart');
+  const wd = db.weeks.filter(w=>w.weight).map(w=>({date:w.start,weight:w.weight}));
+  if (wd.length > 0) {
+    const maxW = Math.max(...wd.map(w=>w.weight));
+    const minW = Math.min(...wd.map(w=>w.weight));
+    const range = maxW - minW || 1;
+    const bars = wd.map(w => {
+      const h = Math.round(((w.weight-minW)/range)*50+10);
       return `<div class="bc-wrap">
         <div style="font-size:10px;color:var(--green);margin-bottom:2px;">${w.weight}</div>
         <div class="bc-outer"><div class="bc-inner" style="height:${h}px;background:var(--green);"></div></div>
-        <div class="bc-lbl">${fmtDate(w.start)}</div>
+        <div class="bc-lbl">${fmtDate(w.start).slice(0,5)}</div>
       </div>`;
     }).join('');
-    wc.innerHTML=`<div class="mini-chart">${bars}</div>`;
-    if(wd.length>1){
-      const diff=(wd[wd.length-1].weight-wd[0].weight).toFixed(1);
-      wc.innerHTML+=`<p style="font-size:13px;color:var(--muted);margin-top:10px;">التغيير: ${diff<0?'⬇️':'⬆️'} ${Math.abs(diff)} كجم</p>`;
+    wc.innerHTML = `<div class="mini-chart">${bars}</div>`;
+    if (wd.length>1) {
+      const diff = (wd[wd.length-1].weight - wd[0].weight).toFixed(1);
+      wc.innerHTML += `<p style="font-size:13px;color:var(--muted);margin-top:10px;">التغيير: ${diff<0?'⬇️':'⬆️'} ${Math.abs(diff)} كجم</p>`;
     }
   }
 
-  const ach=document.getElementById('achievements');
-  const list=[];
-  if(db.weeks.length>=1)list.push('🌱 أسبوع أول مكتمل');
-  if(db.weeks.length>=4)list.push('📅 شهر كامل من التتبع');
-  if(totalDef/7700>=1)list.push('⚖️ خسرت أكثر من كيلوغرام');
-  if(totalDef/7700>=5)list.push('🏆 خسرت 5 كيلوغرام!');
-  const tl=Object.keys(db.days).length;
-  if(tl>=7)list.push('✅ 7 أيام تسجيل');
-  if(tl>=30)list.push('🔥 30 يوم تسجيل!');
-  ach.innerHTML=list.length
-    ?list.map(a=>`<div style="padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;margin-bottom:8px;font-size:14px;">${a}</div>`).join('')
-    :'<p style="color:var(--muted);font-size:14px;text-align:center;padding:16px;">أكمل أسبوعك الأول 🚀</p>';
+  // Achievements
+  const ach = document.getElementById('achievements');
+  const list = [];
+  if (db.weeks.length>=1) list.push('🌱 أسبوع أول مكتمل');
+  if (db.weeks.length>=4) list.push('📅 شهر كامل من التتبع');
+  if (totalDef/7700>=1) list.push('⚖️ خسرت أكثر من كيلوغرام');
+  if (totalDef/7700>=5) list.push('🏆 خسرت 5 كيلوغرام!');
+  const tl = Object.keys(db.days).length;
+  if (tl>=7) list.push('✅ 7 أيام تسجيل');
+  if (tl>=30) list.push('🔥 30 يوم تسجيل!');
+  ach.innerHTML = list.length
+    ? list.map(a=>`<div style="padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;margin-bottom:8px;font-size:14px;">${a}</div>`).join('')
+    : '<p style="color:var(--muted);font-size:14px;text-align:center;padding:16px;">أكمل أسبوعك الأول 🚀</p>';
 }
 
-// ══════════════════════════════════════════
+// ══════════════════════════════════════════════
 //  HISTORY
-// ══════════════════════════════════════════
-function loadHistory(){
-  const el=document.getElementById('histTable');
-  if(!db.weeks.length){el.innerHTML='<p style="color:var(--muted);font-size:14px;text-align:center;padding:20px;">لا يوجد سجل</p>';return;}
-  const rows=[...db.weeks].reverse().map(w=>{
-    const act=weekCal(w);
-    const pct=w.budget>0?Math.round(act/w.budget*100):0;
-    const bc=pct<=95?'b-green':pct<=105?'b-amber':'b-red';
-    const bt=pct<=95?'تحت المستهدف':pct<=105?'في المستهدف':'تجاوز';
-    const protC=weekProtConsumed(w);
+// ══════════════════════════════════════════════
+function loadHistory() {
+  const el = document.getElementById('histTable');
+  if (!db.weeks.length) { el.innerHTML='<p style="color:var(--muted);font-size:14px;text-align:center;padding:20px;">لا يوجد سجل</p>'; return; }
+  const rows = [...db.weeks].reverse().map(w => {
+    const act = weekCal(w);
+    const pct = w.budget>0 ? Math.round(act/w.budget*100) : 0;
+    const bc = pct<=95?'b-green':pct<=105?'b-amber':'b-red';
+    const bt = pct<=95?'تحت المستهدف':pct<=105?'في المستهدف':'تجاوز';
+    const protC = weekProtConsumed(w);
+    const protPct = w.protWeekly>0 ? Math.round(protC/w.protWeekly*100) : null;
     return `<tr>
       <td>${fmtDate(w.start)}</td>
       <td>${w.weight?w.weight+' كجم':'—'}</td>
@@ -1642,531 +986,20 @@ function loadHistory(){
       <td style="font-family:var(--mono);">${act.toLocaleString()}</td>
       <td><span class="badge ${bc}">${pct}% — ${bt}</span></td>
       <td style="font-family:var(--mono);color:var(--prot);">${w.protWeekly?protC+' / '+w.protWeekly+'ج':'—'}</td>
-      <td><button class="btn btn-purple btn-sm" onclick="printSavedWeek('${w.start}')">🖨️</button></td>
     </tr>`;
   }).join('');
-  el.innerHTML=`<table class="hist-table">
-    <thead><tr><th>البداية</th><th>الوزن</th><th>مخطط</th><th>فعلي</th><th>الأداء</th><th>بروتين</th><th>طباعة</th></tr></thead>
+  el.innerHTML = `<table class="hist-table">
+    <thead><tr><th>البداية</th><th>الوزن</th><th>سعرات مخطط</th><th>فعلي</th><th>الأداء</th><th>بروتين</th></tr></thead>
     <tbody>${rows}</tbody></table>`;
 }
 
-function printSavedWeek(ws){
-  const week=db.weeks.find(w=>w.start===ws);
-  if(!week){toast('⚠️ لم أجد الخطة');return;}
-  document.getElementById('printTitle').textContent='خطة وجبات الأسبوع';
-  document.getElementById('printSubtitle').textContent='من '+fmtDateFull(ws)+' إلى '+fmtDateFull(addDays(ws,6));
-  const budgets=week.days.map(d=>d.planned);
-  const mealPlans=week.mealPlans||Array(7).fill([]);
-  buildPrintRows(ws,mealPlans,budgets);
-  document.getElementById('printFooter').textContent='طُبع بواسطة ProDiet Tracker · '+new Date().toLocaleDateString('en-GB');
-  window.print();
-}
-
-function editItem(gid,iid){
-  const g=db.presets.find(g=>g.id===gid);
-  if(!g)return;
-  const item=g.items.find(i=>i.id===iid);
-  if(!item)return;
-  document.getElementById('eiGid').value=gid;
-  document.getElementById('eiIid').value=iid;
-  document.getElementById('eiModalSub').textContent=g.name;
-  document.getElementById('eiCode').value=item.code||'';
-  document.getElementById('eiName').value=item.name;
-  // Always show ingredients section — for new items start with one empty row
-  if(!item.ingredients) item.ingredients=[];
-  document.getElementById('eiIngSection').style.display='block';
-  document.getElementById('eiNoIngSection').style.display='none';
-  if(item.ingredients.length===0){
-    // New item — add first empty ingredient row automatically
-    item.ingredients.push({name:'',qty:1,calPer:0,protPer:0});
-  }
-  renderEiIngRows(item.ingredients);
-  document.getElementById('editItemModal').style.display='flex';
-  setTimeout(()=>document.getElementById('eiCode').focus(),80);
-}
-
-function renderEiIngRows(ingredients){
-  const container=document.getElementById('eiIngRows');
-  container.innerHTML=ingredients.map((ig,i)=>{
-    const totalCal  = Math.round(ig.qty * ig.calPer);
-    const totalProt = Math.round(ig.qty * ig.protPer * 10) / 10;
-    return `<div style="padding:10px 0;border-bottom:1px solid rgba(36,48,68,.5);">
-      <!-- Row 1: name + delete -->
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
-        <input type="text" value="${ig.name}" oninput="eiIngUpdate()" data-ei-name="${i}"
-          style="flex:1;background:#1c2333;border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:13px;padding:7px 10px;">
-        <button onclick="eiRemoveRow(${i})" style="width:30px;height:30px;background:rgba(239,68,68,.12);border:none;border-radius:7px;color:var(--danger);cursor:pointer;font-size:15px;flex-shrink:0;">✕</button>
-      </div>
-      <!-- Row 2: qty controls + calPer input + protPer input -->
-      <div style="display:grid;grid-template-columns:auto 56px auto 1fr 1fr;gap:6px;align-items:center;margin-bottom:6px;">
-        <button onclick="eiStepQty(${i},-0.5)" style="width:30px;height:30px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:17px;cursor:pointer;line-height:1;">−</button>
-        <input type="number" value="${ig.qty}" step="0.5" min="0" oninput="eiIngUpdate()" data-ei-qty="${i}"
-          style="background:#1c2333;border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--mono);font-size:15px;font-weight:700;padding:5px;text-align:center;">
-        <button onclick="eiStepQty(${i},0.5)" style="width:30px;height:30px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:17px;cursor:pointer;line-height:1;">+</button>
-        <div>
-          <div style="font-size:9px;color:var(--accent);margin-bottom:2px;text-align:center;">سعرة / وحدة</div>
-          <input type="number" value="${ig.calPer}" step="1" min="0" oninput="eiIngUpdate()" data-ei-calper="${i}"
-            style="width:100%;background:#1c2333;border:1px solid rgba(59,130,246,.4);border-radius:7px;color:var(--accent);font-family:var(--mono);font-size:14px;font-weight:600;padding:5px;text-align:center;">
-        </div>
-        <div>
-          <div style="font-size:9px;color:var(--prot);margin-bottom:2px;text-align:center;">بروتين / وحدة</div>
-          <input type="number" value="${ig.protPer}" step="0.1" min="0" oninput="eiIngUpdate()" data-ei-protper="${i}"
-            style="width:100%;background:#1c2333;border:1px solid rgba(168,85,247,.4);border-radius:7px;color:var(--prot);font-family:var(--mono);font-size:14px;font-weight:600;padding:5px;text-align:center;">
-        </div>
-      </div>
-      <!-- Row 3: totals per ingredient -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-        <div style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.15);border-radius:7px;padding:5px 8px;display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:11px;color:var(--muted);">المجموع سعرة</span>
-          <span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--accent);" id="ei-cal-${i}">${totalCal}</span>
-        </div>
-        <div style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.15);border-radius:7px;padding:5px 8px;display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:11px;color:var(--muted);">المجموع بروتين</span>
-          <span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--prot);" id="ei-prot-${i}">${totalProt}ج</span>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-  eiIngUpdate();
-}
-
-
-function eiStepQty(idx, delta){
-  const rows = document.getElementById('eiIngRows');
-  const qtyInput = rows.querySelector('[data-ei-qty="'+idx+'"]');
-  if(!qtyInput) return;
-  const newQty = Math.max(0, Math.round((parseFloat(qtyInput.value||0) + delta)*10)/10);
-  qtyInput.value = newQty;
-  eiIngUpdate();
-}
-
-function eiIngUpdate(){
-  const rows=document.getElementById('eiIngRows');
-  if(!rows)return;
-  let totalCal=0,totalProt=0;
-  const n=rows.querySelectorAll('[data-ei-qty]').length;
-  for(let i=0;i<n;i++){
-    const qty=parseFloat(rows.querySelector('[data-ei-qty="'+i+'"]')?.value)||0;
-    const calPer=parseFloat(rows.querySelector('[data-ei-calper="'+i+'"]')?.value)||0;
-    const protPer=parseFloat(rows.querySelector('[data-ei-protper="'+i+'"]')?.value)||0;
-    const rowCal=Math.round(qty*calPer);
-    const rowProt=Math.round(qty*protPer*10)/10;
-    totalCal+=qty*calPer;
-    totalProt+=qty*protPer;
-    const calEl=document.getElementById('ei-cal-'+i);
-    const protEl=document.getElementById('ei-prot-'+i);
-    if(calEl)calEl.textContent=rowCal;
-    if(protEl)protEl.textContent=rowProt+'ج';
-  }
-  document.getElementById('eiTotalCal').textContent=Math.round(totalCal).toLocaleString();
-  document.getElementById('eiTotalProt').textContent=(Math.round(totalProt*10)/10)+' ج';
-}
-
-function eiAddIngRow(){
-  const gid=document.getElementById('eiGid').value;
-  const iid=document.getElementById('eiIid').value;
-  const g=db.presets.find(g=>g.id===gid);
-  if(!g)return;
-  const item=g.items.find(i=>i.id===iid);
-  if(!item)return;
-  if(!item.ingredients)item.ingredients=[];
-  item.ingredients.push({name:'مكون جديد',qty:1,calPer:0,protPer:0});
-  renderEiIngRows(item.ingredients);
-}
-
-function eiRemoveRow(idx){
-  const gid=document.getElementById('eiGid').value;
-  const iid=document.getElementById('eiIid').value;
-  const g=db.presets.find(g=>g.id===gid);if(!g)return;
-  const item=g.items.find(i=>i.id===iid);if(!item||!item.ingredients)return;
-  item.ingredients.splice(idx,1);
-  renderEiIngRows(item.ingredients);
-}
-
-function closeEiModal(){document.getElementById('editItemModal').style.display='none';}
-
-function saveEditItem(){
-  const gid=document.getElementById('eiGid').value;
-  const iid=document.getElementById('eiIid').value;
-  const g=db.presets.find(g=>g.id===gid);if(!g)return;
-  const item=g.items.find(i=>i.id===iid);if(!item)return;
-  const code=document.getElementById('eiCode').value.trim().toUpperCase();
-  const name=document.getElementById('eiName').value.trim();
-  if(!name){toast('⚠️ أدخل الاسم');return;}
-  item.code=code; item.name=name;
-  const eiSec=document.getElementById('eiIngSection'); const hasIng=eiSec&&eiSec.style.display==='block';
-  if(hasIng){
-    // Read updated ingredients from form
-    const rows=document.getElementById('eiIngRows');
-    const n=rows.querySelectorAll('[data-ei-qty]').length;
-    const ings=[];
-    for(let i=0;i<n;i++){
-      const nm=rows.querySelector('[data-ei-name="'+i+'"]')?.value.trim()||'';
-      const qty=parseFloat(rows.querySelector('[data-ei-qty="'+i+'"]')?.value)||0;
-      const calPer=parseFloat(rows.querySelector('[data-ei-calper="'+i+'"]')?.value)||0;
-      const protPer=parseFloat(rows.querySelector('[data-ei-protper="'+i+'"]')?.value)||0;
-      if(nm)ings.push({name:nm,qty,calPer,protPer});
-    }
-    item.ingredients=ings;
-    item.cal=Math.round(ings.reduce((s,ig)=>s+ig.qty*ig.calPer,0));
-    item.prot=Math.round(ings.reduce((s,ig)=>s+ig.qty*ig.protPer,0)*10)/10;
-  } else {
-    item.cal=parseInt(document.getElementById('eiCal').value)||0;
-    item.prot=parseFloat(document.getElementById('eiProt').value)||0;
-  }
-  saveDB();closeEiModal();renderPM();buildDDs();
-  toast('✅ تم تعديل '+name+' — '+item.cal+' سعرة · '+item.prot+'ج');
-}
-document.addEventListener('click',e=>{if(e.target===document.getElementById('editItemModal'))closeEiModal();});
-
-// ══════════════════════════════════════════
-//  WEEKLY OVERVIEW (log tab)
-// ══════════════════════════════════════════
-function loadWeekOverview(){
-  // Follow the current logDate's week automatically
-  const logD = document.getElementById('logDate').value || today();
-  const ws = weekStart(logD);
-  const lbl = document.getElementById('woWeekLabel');
-  if(lbl) lbl.textContent = fmtDateFull(ws) + ' — ' + fmtDateFull(addDays(ws,6));
-
-  const week=db.weeks.find(w=>w.start===ws);
-  const t=today();
-  const grid=document.getElementById('woGrid');
-  const summary=document.getElementById('woSummary');
-  if(!grid)return;
-
-  let totalPlanned=0, totalActual=0;
-  let cells='';
-
-  for(let i=0;i<7;i++){
-    const date=addDays(ws,i);
-    const planned=week?week.days[i].planned:null;
-    const actual=dayCal(date);
-    const isFuture=date>t;
-    const isFasting=planned===0;
-    const isActive=date===(_woSelectedDate||logD);
-    const rem=planned!==null&&!isFuture&&!isFasting?planned-actual:null;
-    const over=rem!==null&&rem<-50;
-    const done=rem!==null&&rem>=0&&actual>0;
-
-    if(planned!==null)totalPlanned+=planned;
-    totalActual+=actual;
-
-    let cls='wo-cell';
-    if(isActive)cls+=' wo-active';
-    else if(isFasting)cls+=' wo-fasting';
-    else if(over)cls+=' wo-over';
-    else if(done)cls+=' wo-done';
-    if(isFuture&&!isActive)cls+=' wo-future';
-
-    const actualColor=actual===0?'color:var(--muted)':over?'color:var(--danger)':'color:var(--green)';
-    const remColor=rem===null?'':rem<0?'color:var(--danger)':rem<200?'color:var(--amber)':'color:var(--green)';
-
-    cells+=`<div class="${cls}" onclick="jumpToDay('${date}')">
-      <div class="wo-dn">${DAYS[i]}</div>
-      <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">${fmtDate(date)}</div>
-      ${planned!==null?`<div class="wo-planned">${isFasting?'—':planned.toLocaleString()}</div>`:'<div class="wo-planned" style="color:rgba(125,133,144,.3);">?</div>'}
-      <div class="wo-actual" style="${actualColor}">${isFuture?'':actual>0?actual.toLocaleString():'—'}</div>
-      ${isFasting?'<span class="wo-ft">صيام</span>':
-        rem!==null&&!isFuture?`<div class="wo-rem" style="${remColor}">${rem>=0?'متبقي '+rem.toLocaleString():('⚠ +'+Math.abs(rem))}</div>`:''}
-    </div>`;
-  }
-  grid.innerHTML=cells;
-
-  // Summary row
-  const remWeek=totalPlanned>0?totalPlanned-totalActual:null;
-  const pct=totalPlanned>0?Math.min(100,Math.round(totalActual/totalPlanned*100)):0;
-  const remColor2=remWeek===null?'var(--muted)':remWeek<0?'var(--danger)':remWeek<500?'var(--amber)':'var(--green)';
-
-  summary.innerHTML=`
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px;">
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;">
-        <div style="font-size:11px;color:var(--muted);margin-bottom:3px;">مجموع المخطط</div>
-        <div style="font-family:var(--mono);font-size:17px;font-weight:700;color:var(--accent);">${totalPlanned>0?totalPlanned.toLocaleString():'—'}</div>
-      </div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;">
-        <div style="font-size:11px;color:var(--muted);margin-bottom:3px;">مجموع الفعلي</div>
-        <div style="font-family:var(--mono);font-size:17px;font-weight:700;color:var(--green);">${totalActual.toLocaleString()}</div>
-      </div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;">
-        <div style="font-size:11px;color:var(--muted);margin-bottom:3px;">متبقي للأسبوع</div>
-        <div style="font-family:var(--mono);font-size:17px;font-weight:700;color:${remColor2};">${remWeek!==null?(remWeek>=0?remWeek.toLocaleString():'⚠ '+Math.abs(remWeek).toLocaleString()):'—'}</div>
-      </div>
-    </div>
-    ${totalPlanned>0?`<div style="height:8px;background:var(--surface2);border-radius:99px;overflow:hidden;">
-      <div style="height:100%;width:${pct}%;border-radius:99px;background:${pct>100?'linear-gradient(90deg,var(--amber),var(--danger))':'linear-gradient(90deg,var(--accent),var(--green))'}; transition:width .5s;"></div>
-    </div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:4px;"><span>${week?'الأسبوع المحدد':'لا توجد خطة'}</span><span>${pct}%</span></div>`:''}`;
-}
-
-function jumpToDay(date){
-  // Just highlight the selected day in overview — don't change the main logDate
-  // Update logDate only if user explicitly selects it
-  _woSelectedDate = date;
-  loadWeekOverview();
-  showWoDaySummary(date);
-}
-
-let _woSelectedDate = null;
-
-function showWoDaySummary(date){
-  const ws = weekStart(date);
-  const week = db.weeks.find(w=>w.start===ws);
-  const di = dow(date);
-  const dd = db.days[date]||{meals:[]};
-  const actual = dd.meals.reduce((s,m)=>s+(m.cal||0),0);
-  const planned = week?week.days[di].planned:null;
-  const diff = planned!==null&&actual>0?actual-planned:null;
-  const diffTxt = diff!==null?(diff>0?'<span style="color:var(--danger)">+'+diff+' زيادة</span>':diff<0?'<span style="color:var(--green)">'+diff+' أقل</span>':'<span style="color:var(--green)">✅ مكتمل</span>'):'';
-  const meals = dd.meals.map(m=>`<div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid rgba(36,48,68,.4);">
-    <span>${m.name}</span><span style="font-family:var(--mono);color:var(--accent);">${m.cal} سعرة</span>
-  </div>`).join('');
-  
-  const area = document.getElementById('woDaySummary');
-  if(!area)return;
-  area.style.display='block';
-  area.innerHTML=`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
-      <div style="font-size:15px;font-weight:700;">${DAYS[di]} · ${fmtDateFull(date)}</div>
-      <div style="display:flex;gap:8px;">
-        ${planned!==null?`<span style="font-family:var(--mono);font-size:13px;color:var(--muted);">مخطط: <strong style="color:var(--accent);">${planned===0?'صيام':planned.toLocaleString()}</strong></span>`:''}
-        <span style="font-family:var(--mono);font-size:13px;color:var(--muted);">فعلي: <strong style="color:var(--green);">${actual.toLocaleString()}</strong></span>
-        ${diffTxt}
-      </div>
-    </div>
-    ${dd.meals.length?meals:'<div style="color:var(--muted);font-size:13px;text-align:center;padding:8px;">لا توجد وجبات مسجلة</div>'}
-    <button onclick="switchToLogDay('${date}')" style="margin-top:10px;width:100%;padding:9px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);border-radius:8px;color:var(--accent);font-size:13px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans Arabic',sans-serif;">✏️ الانتقال لتسجيل هذا اليوم</button>`;
-}
-
-function switchToLogDay(date){
-  setLogDate(date);
-  loadDay();
-  document.getElementById('woDaySummary').style.display='none';
-  _woSelectedDate=null;
-  loadWeekOverview();
-}
-
-// ══════════════════════════════════════════
-//  INGREDIENT EDITOR MODAL
-// ══════════════════════════════════════════
-let _ingMeal = null; // {name, ingredients:[{name,qty,calPer,protPer}]}
-
-function buildIngModalDD(){
-  const sel = document.getElementById('ingModalDD');
-  if(!sel) return;
-  sel.innerHTML = '<option value="">— اختر وجبة —</option>';
-  for(const grp of db.presets){
-    const og = document.createElement('optgroup');
-    og.label = '🍽️ ' + grp.name;
-    for(const item of grp.items){
-      const o = document.createElement('option');
-      o.value = JSON.stringify({gid:grp.id, iid:item.id});
-      o.textContent = (item.code?'['+item.code+'] ':'')+item.name+' — '+item.cal+' سعرة'+(item.prot?' | '+item.prot+'ج':'');
-      og.appendChild(o);
-    }
-    sel.appendChild(og);
-  }
-}
-
-function ingModalSelectPreset(sel){
-  if(!sel.value) return;
-  try{
-    const d = JSON.parse(sel.value);
-    loadIngForModal(d.gid, d.iid);
-  }catch(e){}
-}
-
-function loadIngForModal(gid, iid){
-  let item = null;
-  for(const g of db.presets){
-    const found = g.items.find(i => i.id === iid);
-    if(found){ item = found; break; }
-  }
-  if(!item) return;
-
-  if(!item.ingredients || !item.ingredients.length){
-    applySimpleMeal(item);
-    // reset dropdown
-    const sel = document.getElementById('ingModalDD');
-    if(sel) sel.value='';
-    return;
-  }
-
-  _ingMeal = {
-    name: item.name,
-    code: item.code || '',
-    ingredients: item.ingredients.map(ig => ({...ig}))
-  };
-
-  document.getElementById('ingModalTitle').textContent = item.code ? '['+item.code+'] '+item.name : item.name;
-  document.getElementById('ingModalSub').textContent = 'عدّل الكميات ثم اضغط تسجيل';
-  renderIngList();
-}
-
-function openIngModal(gid, iid) {
-  // Build inner dropdown
-  buildIngModalDD();
-  // Reset state
-  _ingMeal = null;
-  document.getElementById('ingModalTitle').textContent = 'إضافة وجبة';
-  document.getElementById('ingModalSub').textContent   = 'اختر وجبة من القائمة';
-  document.getElementById('ingList').innerHTML = '<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px;">اختر وجبة من القائمة أعلاه</p>';
-  document.getElementById('ingTotalCal').textContent  = '0';
-  document.getElementById('ingTotalProt').textContent = '0';
-  document.getElementById('ingModal').style.display = 'flex';
-
-  // If called with specific item, preselect it
-  if(gid && iid){
-    const sel = document.getElementById('ingModalDD');
-    if(sel){
-      for(const opt of sel.options){
-        try{
-          const d = JSON.parse(opt.value);
-          if(d.gid===gid && d.iid===iid){ sel.value=opt.value; break; }
-        }catch(e){}
-      }
-    }
-    loadIngForModal(gid, iid);
-  }
-}
-
-function renderIngList() {
-  if (!_ingMeal) return;
-  const list = document.getElementById('ingList');
-  list.innerHTML = _ingMeal.ingredients.map((ig, i) => {
-    const cal  = Math.round(ig.qty * ig.calPer);
-    const prot = Math.round(ig.qty * ig.protPer * 10) / 10;
-    return `<div style="border-bottom:1px solid rgba(36,48,68,.5);padding:8px 0;">
-      <div style="font-size:13px;font-weight:500;margin-bottom:6px;color:var(--text);">${ig.name}</div>
-      <div style="display:grid;grid-template-columns:auto 1fr auto auto auto;gap:6px;align-items:center;">
-        <button onclick="stepIngQty(${i},-0.5)" style="width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;">−</button>
-        <input class="ing-qty" type="number" step="0.5" min="0" value="${ig.qty}"
-          id="ing-qty-${i}" oninput="updateIngQty(${i},this.value)"
-          style="text-align:center;font-family:var(--mono);font-size:16px;font-weight:700;">
-        <button onclick="stepIngQty(${i},0.5)" style="width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;">+</button>
-        <div style="text-align:center;min-width:56px;">
-          <div style="font-size:10px;color:var(--accent);">سعرة</div>
-          <div style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--accent);" id="ing-cal-${i}">${cal}</div>
-        </div>
-        <div style="text-align:center;min-width:52px;">
-          <div style="font-size:10px;color:var(--prot);">بروتين</div>
-          <div style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--prot);" id="ing-prot-${i}">${prot}ج</div>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-  updateIngTotals();
-}
-
-function stepIngQty(idx, delta) {
-  if (!_ingMeal) return;
-  const newQty = Math.max(0, Math.round((_ingMeal.ingredients[idx].qty + delta) * 10) / 10);
-  _ingMeal.ingredients[idx].qty = newQty;
-  const input = document.getElementById('ing-qty-'+idx);
-  if (input) input.value = newQty;
-  const ig = _ingMeal.ingredients[idx];
-  document.getElementById('ing-cal-'+idx).textContent  = Math.round(ig.qty * ig.calPer);
-  document.getElementById('ing-prot-'+idx).textContent = Math.round(ig.qty * ig.protPer * 10)/10 + 'ج';
-  updateIngTotals();
-}
-
-function updateIngQty(idx, val) {
-  if (!_ingMeal) return;
-  _ingMeal.ingredients[idx].qty = parseFloat(val) || 0;
-  const ig = _ingMeal.ingredients[idx];
-  const cal = Math.round(ig.qty * ig.calPer * 10) / 10;
-  const prot = Math.round(ig.qty * ig.protPer * 10) / 10;
-  document.getElementById('ing-cal-'+idx).textContent = cal;
-  document.getElementById('ing-prot-'+idx).textContent = prot+'ج';
-  updateIngTotals();
-}
-
-function updateIngTotals() {
-  if (!_ingMeal) return;
-  const totalCal = Math.round(_ingMeal.ingredients.reduce((s,ig) => s + ig.qty * ig.calPer, 0));
-  const totalProt = Math.round(_ingMeal.ingredients.reduce((s,ig) => s + ig.qty * ig.protPer, 0) * 10) / 10;
-  document.getElementById('ingTotalCal').textContent = totalCal.toLocaleString();
-  document.getElementById('ingTotalProt').textContent = totalProt + ' ج';
-}
-
-function confirmIngMeal() {
-  if (!_ingMeal) return;
-  // Read ALL data BEFORE closing (closeIngModal nulls _ingMeal)
-  const mealName = _ingMeal.name;
-  const totalCal  = Math.round(_ingMeal.ingredients.reduce((s,ig) => s + ig.qty * ig.calPer, 0));
-  const totalProt = Math.round(_ingMeal.ingredients.reduce((s,ig) => s + ig.qty * ig.protPer, 0) * 10) / 10;
-  const isMpMode  = _mpIngMode;
-  closeIngModal(); // nulls _ingMeal and resets _mpIngMode
-
-  if(isMpMode){
-    // Fill the meal plan modal fields and re-show it
-    document.getElementById('mpMealName').value = mealName;
-    document.getElementById('mpMealCal').value  = totalCal;
-    document.getElementById('mpMealProt').value = totalProt;
-    document.getElementById('mealPlanModal').style.display = 'flex';
-    toast('✅ '+mealName+' — '+totalCal+' سعرة · اضغط حفظ لإضافته للخطة');
-  } else {
-    // Daily log: add meal directly then show success in modal
-    const date = document.getElementById('logDate').value;
-    if(!db.days[date]) db.days[date] = {meals:[]};
-    db.days[date].meals.push({
-      name: mealName, cal: totalCal, prot: totalProt,
-      time: new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
-    });
-    saveDB();
-    loadDay(); loadWeekOverview();
-    // Show success banner inside ingModal — keep it open for next meal
-    const sub = document.getElementById('ingModalSub');
-    sub.innerHTML = '<span style="color:var(--green);font-weight:600;">✅ تم تسجيل: '+mealName+' — '+totalCal+' سعرة</span><br><span style="color:var(--muted);font-size:11px;">اختر وجبة أخرى أو اضغط إغلاق</span>';
-    // Reset the dropdown so user can pick another meal
-    const dd = document.getElementById('presetDD');
-    if(dd) dd.value='';
-    // Keep modal open but reset ingredient list
-    _ingMeal = null;
-    document.getElementById('ingList').innerHTML = '<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px;">اختر وجبة من القائمة أعلاه</p>';
-    document.getElementById('ingTotalCal').textContent = '0';
-    document.getElementById('ingTotalProt').textContent = '0';
-    document.getElementById('ingModalTitle').textContent = 'إضافة وجبة';
-    // Reset dropdown for next selection
-    const dd2 = document.getElementById('ingModalDD');
-    if(dd2) dd2.value = '';
-    _ingMeal = null;
-  }
-}
-
-function applySimpleMeal(item) {
-  if(_mpIngMode){
-    _mpIngMode=false;
-    document.getElementById('mpMealName').value = item.name;
-    document.getElementById('mpMealCal').value  = item.cal || '';
-    document.getElementById('mpMealProt').value = item.prot || '';
-    document.getElementById('mealPlanModal').style.display='flex';
-    toast('✅ '+item.name+' — اضغط حفظ لإضافته للخطة');
-  } else {
-    document.getElementById('mealName').value = item.name;
-    document.getElementById('mealCal').value  = item.cal || '';
-    document.getElementById('mealProt').value = item.prot || '';
-    toast('✅ ' + item.name);
-  }
-}
-
-function closeIngModal() {
-  document.getElementById('ingModal').style.display = 'none';
-  if(_mpIngMode){
-    // User cancelled ingModal — reopen plan modal
-    document.getElementById('mealPlanModal').style.display='flex';
-  }
-  _ingMeal = null;
-  _mpIngMode = false;
-}
-document.addEventListener('click', e => {
-  if (e.target === document.getElementById('ingModal')) closeIngModal();
-});
-
-
-function clearAll(){
-  if(!confirm('هل أنت متأكد؟ سيتم حذف جميع البيانات نهائياً.'))return;
-  db={weeks:[],days:{},presets:defaultPresets()};
-  saveDB();buildDDs();loadDay();loadStats();loadHistory();
+// ══════════════════════════════════════════════
+//  CLEAR ALL
+// ══════════════════════════════════════════════
+function clearAll() {
+  if (!confirm('هل أنت متأكد؟ سيتم حذف جميع البيانات نهائياً.')) return;
+  db = { weeks:[], days:{}, presets:defaultPresets() };
+  saveDB(); buildDD(); loadDay(); loadStats(); loadHistory();
   toast('🗑️ تم حذف جميع البيانات');
 }
 </script>
