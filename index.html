@@ -218,6 +218,36 @@ textarea{resize:vertical;min-height:70px;}
 .wo-ft{font-size:9px;color:var(--amber);background:rgba(245,158,11,.15);border-radius:4px;padding:1px 4px;margin-top:3px;display:inline-block;}
 @media(max-width:560px){#woGrid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}}
 </style>
+
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCZ0ko68xJlqmoz1HtQRpFQNZEh5uVnx58",
+    authDomain: "prodiet-6aa8c.firebaseapp.com",
+    databaseURL: "https://prodiet-6aa8c-default-rtdb.firebaseio.com",
+    projectId: "prodiet-6aa8c",
+    storageBucket: "prodiet-6aa8c.firebasestorage.app",
+    messagingSenderId: "971081942157",
+    appId: "1:971081942157:web:0b0e71c667635de41f4ec4"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+  const dbRef = ref(database, 'prodiet');
+
+  // Make firebase functions available globally
+  window._fbSet = (data) => set(dbRef, data);
+  window._fbListen = (cb) => onValue(dbRef, (snapshot) => {
+    const val = snapshot.val();
+    if(val) cb(val);
+  });
+  window._fbReady = true;
+  // Trigger ready event
+  document.dispatchEvent(new Event('firebase-ready'));
+</script>
 </head>
 <body>
 <div class="app">
@@ -620,7 +650,13 @@ function loadDB() {
   } catch(e) {}
   return { weeks:[], days:{}, presets:defaultPresets() };
 }
-function saveDB() { localStorage.setItem(KEY, JSON.stringify(db)); }
+function saveDB() {
+  localStorage.setItem(KEY, JSON.stringify(db));
+  // Save to Firebase if ready
+  if(window._fbSet) {
+    window._fbSet(db).catch(e => console.log('Firebase save error:', e));
+  }
+}
 
 function defaultPresets() {
   return [
@@ -905,6 +941,29 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('protFactor').addEventListener('change',updateProtPreview);
   document.getElementById('protCustom').addEventListener('input',updateProtPreview);
   document.getElementById('curWeight').addEventListener('input',updateProtPreview);
+
+  // Firebase sync — listen for remote changes
+  document.addEventListener('firebase-ready', () => {
+    if(!window._fbListen) return;
+    window._fbListen((remote) => {
+      if(!remote) return;
+      // Merge remote data into local
+      const updated = {
+        weeks:   remote.weeks   || db.weeks,
+        days:    remote.days    || db.days,
+        presets: (remote.presets && remote.presets.length) ? remote.presets : db.presets
+      };
+      // Only update UI if data actually changed
+      const before = JSON.stringify({w:db.weeks.length, d:Object.keys(db.days).length});
+      db = updated;
+      localStorage.setItem(KEY, JSON.stringify(db));
+      const after = JSON.stringify({w:db.weeks.length, d:Object.keys(db.days).length});
+      if(before !== after) {
+        buildDDs(); loadDay(); loadStats(); loadHistory(); loadWeekOverview();
+        toast('🔄 تمت المزامنة');
+      }
+    });
+  });
 });
 
 function switchTab(n) {
