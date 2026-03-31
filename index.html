@@ -1,185 +1,39 @@
-' ═══════════════════════════════════════════════════════
-' VAULT MACROS — Copy this into your Excel VBA Editor
-' How: Press Alt+F11 → Insert → Module → Paste
-' ═══════════════════════════════════════════════════════
+🔥
+‏ProDiet Tracker
+تتبع السعرات والبروتين
+—
+📋 التخطيط
+✏️ التسجيل اليومي
+🍽️ الوجبات
+📊 إحصاءات
+📅 السجل
+
+إعداد أسبوع جديد
+📅 تاريخ البداية (الأحد)
+⚖️ الوزن الحالي (كجم)
+
+‏🧬 BMR
+
+🏃 معامل النشاط
+          خامل (×1.2)
+          خفيف (×1.375)
+          متوسط (×1.55)
+          عالي (×1.725)
+        
+➖ الخصم الأسبوعي (سعرة)
 
 
-Attribute VB_Name = "VaultMacros"
-Option Explicit
 
-' ═══════════════════════════════════════════
-'  ADD ROW — copies last data row formatting
-' ═══════════════════════════════════════════
-Sub AddRow_Personal()
-    AddRowToSheet "Personal", 5
-End Sub
-Sub AddRow_Business()
-    AddRowToSheet "Business", 5
-End Sub
-Sub AddRow_Banking()
-    AddRowToSheet "Banking", 5
-End Sub
-Sub AddRow_Contracts()
-    AddRowToSheet "Contracts", 5
-End Sub
-Sub AddRow_Expiry()
-    AddRowToSheet "Expiry Tracker", 5
-End Sub
+هدف البروتين الأسبوعي
+🥩 معامل البروتين (× الوزن)
+          1.2 × الوزن (أقل)
+          1.6 × الوزن (متوسط)
+          2.0 × الوزن (عالي)
+          مخصص
+        
+🎯 أو أدخل هدف يدوي (جم/أسبوع)
 
-Sub AddRowToSheet(sheetName As String, dataStartRow As Long)
-    Dim ws As Worksheet
-    Dim lastRow As Long
-    Dim newRow As Long
-    
-    On Error GoTo ErrHandler
-    Set ws = ThisWorkbook.Sheets(sheetName)
-    
-    ' Find last row with data
-    lastRow = dataStartRow
-    Do While ws.Cells(lastRow + 1, 2).Value <> "" Or lastRow < dataStartRow + 2
-        If ws.Cells(lastRow + 1, 2).Value = "" And lastRow > dataStartRow + 8 Then Exit Do
-        lastRow = lastRow + 1
-        If lastRow > 200 Then Exit Do
-    Loop
-    
-    newRow = lastRow + 1
-    
-    ' Copy formatting from last data row
-    ws.Rows(lastRow).Copy
-    ws.Rows(newRow).Insert Shift:=xlDown
-    ws.Rows(newRow).ClearContents
-    
-    ' Set row number in col A
-    Dim startNum As Long
-    startNum = 1
-    Dim r As Long
-    For r = dataStartRow To newRow
-        If IsNumeric(ws.Cells(r, 1).Value) And ws.Cells(r, 1).Value > 0 Then
-            startNum = ws.Cells(r, 1).Value
-        End If
-    Next r
-    ws.Cells(newRow, 1).Value = startNum + 1
-    ws.Cells(newRow, 1).HorizontalAlignment = xlCenter
-    
-    ' Highlight new row briefly
-    ws.Cells(newRow, 2).Select
-    
-    MsgBox "✅  تم إضافة صف جديد!" & Chr(13) & "New row added successfully.", vbInformation, "Vault"
-    Exit Sub
-ErrHandler:
-    MsgBox "❌  حدث خطأ. Error: " & Err.Description, vbCritical, "Vault"
-End Sub
+—
+هدف البروتين / أسبوع (جم)
+⚡ احسب وعرض التوزيع
 
-' ═══════════════════════════════════════════
-'  PRINT — current sheet formatted
-' ═══════════════════════════════════════════
-Sub PrintCurrentSheet()
-    Dim ws As Worksheet
-    Set ws = ActiveSheet
-    
-    With ws.PageSetup
-        .Orientation = xlLandscape
-        .FitToPagesWide = 1
-        .FitToPagesTall = False
-        .PrintTitleRows = "$4:$4"
-        .TopMargin = Application.InchesToPoints(0.5)
-        .BottomMargin = Application.InchesToPoints(0.5)
-        .LeftMargin = Application.InchesToPoints(0.5)
-        .RightMargin = Application.InchesToPoints(0.5)
-        .CenterHorizontally = True
-        .PrintArea = ""
-    End With
-    
-    Dim ans As VbMsgBoxResult
-    ans = MsgBox("🖨️  طباعة الشيت الحالي؟" & Chr(13) & "Print current sheet: " & ws.Name & "?", _
-                  vbYesNo + vbQuestion, "Vault — Print")
-    If ans = vbYes Then
-        ws.PrintOut
-    End If
-End Sub
-
-' ═══════════════════════════════════════════
-'  SAVE — backup with timestamp
-' ═══════════════════════════════════════════
-Sub SaveBackup()
-    Dim savePath As String
-    Dim ts As String
-    ts = Format(Now, "YYYY-MM-DD_HHMM")
-    savePath = ThisWorkbook.Path & "\Vault_Backup_" & ts & ".xlsm"
-    
-    On Error GoTo ErrHandler
-    ThisWorkbook.SaveCopyAs savePath
-    ThisWorkbook.Save
-    MsgBox "✅  تم الحفظ والنسخ الاحتياطي!" & Chr(13) & _
-           "Saved + Backup created:" & Chr(13) & savePath, vbInformation, "Vault"
-    Exit Sub
-ErrHandler:
-    ThisWorkbook.Save
-    MsgBox "✅  تم الحفظ!" & Chr(13) & "File saved successfully.", vbInformation, "Vault"
-End Sub
-
-' ═══════════════════════════════════════════
-'  OPEN DRIVE FOLDER — opens browser
-' ═══════════════════════════════════════════
-Sub OpenDriveVault()
-    Dim url As String
-    url = "https://drive.google.com/drive/folders/"
-    
-    Dim ans As VbMsgBoxResult
-    ans = MsgBox("🔗  فتح Google Drive لإضافة المرفقات؟" & Chr(13) & _
-                  "Open Google Drive to add attachments?", _
-                  vbYesNo + vbQuestion, "Vault — Drive")
-    If ans = vbYes Then
-        Shell "cmd /c start " & url, vbHide
-    End If
-End Sub
-
-' ═══════════════════════════════════════════
-'  STATUS AUTO-COLOR — run on open
-' ═══════════════════════════════════════════
-Sub RefreshStatus()
-    Dim sheets() As String
-    sheets = Split("Personal,Business,Banking,Contracts", ",")
-    Dim shName As Variant
-    
-    For Each shName In sheets
-        Dim ws As Worksheet
-        On Error Resume Next
-        Set ws = ThisWorkbook.Sheets(CStr(shName))
-        On Error GoTo 0
-        If Not ws Is Nothing Then
-            Dim r As Long
-            For r = 5 To 50
-                Dim statusCell As Range
-                Set statusCell = ws.Cells(r, 6)
-                Dim v As String
-                v = CStr(statusCell.Value)
-                If v <> "" Then
-                    Select Case True
-                        Case InStr(v, "Valid") > 0 Or InStr(v, "Active") > 0
-                            statusCell.Font.Color = RGB(26, 122, 58)
-                            statusCell.Interior.Color = RGB(232, 245, 233)
-                        Case InStr(v, "Expired") > 0
-                            statusCell.Font.Color = RGB(192, 57, 43)
-                            statusCell.Interior.Color = RGB(255, 235, 238)
-                        Case InStr(v, "Soon") > 0 Or InStr(v, "Watch") > 0
-                            statusCell.Font.Color = RGB(245, 127, 23)
-                            statusCell.Interior.Color = RGB(255, 253, 231)
-                    End Select
-                End If
-            Next r
-        End If
-    Next shName
-    
-    MsgBox "✅  تم تحديث الحالات!" & Chr(13) & "Status colors refreshed.", vbInformation, "Vault"
-End Sub
-
-
-' ── ThisWorkbook ──
-
-Attribute VB_Name = "ThisWorkbook"
-Private Sub Workbook_Open()
-    Application.ScreenUpdating = False
-    Sheets("Dashboard").Activate
-    Application.ScreenUpdating = True
-End Sub
