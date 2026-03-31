@@ -219,34 +219,45 @@ textarea{resize:vertical;min-height:70px;}
 @media(max-width:560px){#woGrid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}}
 </style>
 
-<!-- Firebase -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+<!-- Firebase REST API — no SDK needed -->
+<script>
+const FB_URL = 'https://prodiet-6aa8c-default-rtdb.firebaseio.com/prodiet';
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCZ0ko68xJlqmoz1HtQRpFQNZEh5uVnx58",
-    authDomain: "prodiet-6aa8c.firebaseapp.com",
-    databaseURL: "https://prodiet-6aa8c-default-rtdb.firebaseio.com",
-    projectId: "prodiet-6aa8c",
-    storageBucket: "prodiet-6aa8c.firebasestorage.app",
-    messagingSenderId: "971081942157",
-    appId: "1:971081942157:web:0b0e71c667635de41f4ec4"
+// Save to Firebase via REST
+window._fbSave = async function(data) {
+  try {
+    await fetch(FB_URL + '.json', {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
+  } catch(e) { console.log('Firebase save error:', e); }
+};
+
+// Load from Firebase via REST
+window._fbLoad = async function() {
+  try {
+    const r = await fetch(FB_URL + '.json');
+    return await r.json();
+  } catch(e) { console.log('Firebase load error:', e); return null; }
+};
+
+// Poll for changes every 10 seconds
+window._fbStartSync = function(onChange) {
+  let lastHash = '';
+  const poll = async () => {
+    const data = await window._fbLoad();
+    if(data) {
+      const hash = JSON.stringify({w:(data.weeks||[]).length, d:Object.keys(data.days||{}).length});
+      if(hash !== lastHash) {
+        lastHash = hash;
+        onChange(data);
+      }
+    }
   };
-
-  const app = initializeApp(firebaseConfig);
-  const database = getDatabase(app);
-  const dbRef = ref(database, 'prodiet');
-
-  // Make firebase functions available globally
-  window._fbSet = (data) => set(dbRef, data);
-  window._fbListen = (cb) => onValue(dbRef, (snapshot) => {
-    const val = snapshot.val();
-    if(val) cb(val);
-  });
-  window._fbReady = true;
-  // Trigger ready event
-  document.dispatchEvent(new Event('firebase-ready'));
+  poll(); // immediate first load
+  setInterval(poll, 10000); // then every 10 seconds
+};
 </script>
 </head>
 <body>
@@ -652,10 +663,7 @@ function loadDB() {
 }
 function saveDB() {
   localStorage.setItem(KEY, JSON.stringify(db));
-  // Save to Firebase if ready
-  if(window._fbSet) {
-    window._fbSet(db).catch(e => console.log('Firebase save error:', e));
-  }
+  if(window._fbSave) window._fbSave(db);
 }
 
 function defaultPresets() {
@@ -942,28 +950,23 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('protCustom').addEventListener('input',updateProtPreview);
   document.getElementById('curWeight').addEventListener('input',updateProtPreview);
 
-  // Firebase sync — listen for remote changes
-  document.addEventListener('firebase-ready', () => {
-    if(!window._fbListen) return;
-    window._fbListen((remote) => {
+  // Firebase sync via REST polling
+  if(window._fbStartSync) {
+    window._fbStartSync((remote) => {
       if(!remote) return;
-      // Merge remote data into local
-      const updated = {
-        weeks:   remote.weeks   || db.weeks,
-        days:    remote.days    || db.days,
+      const localStr = JSON.stringify({w:db.weeks.length, d:Object.keys(db.days).length});
+      const remoteStr = JSON.stringify({w:(remote.weeks||[]).length, d:Object.keys(remote.days||{}).length});
+      if(localStr === remoteStr) return; // no change
+      db = {
+        weeks:   remote.weeks   || [],
+        days:    remote.days    || {},
         presets: (remote.presets && remote.presets.length) ? remote.presets : db.presets
       };
-      // Only update UI if data actually changed
-      const before = JSON.stringify({w:db.weeks.length, d:Object.keys(db.days).length});
-      db = updated;
       localStorage.setItem(KEY, JSON.stringify(db));
-      const after = JSON.stringify({w:db.weeks.length, d:Object.keys(db.days).length});
-      if(before !== after) {
-        buildDDs(); loadDay(); loadStats(); loadHistory(); loadWeekOverview();
-        toast('🔄 تمت المزامنة');
-      }
+      buildDDs(); loadDay(); loadStats(); loadHistory(); loadWeekOverview();
+      toast('🔄 تمت المزامنة');
     });
-  });
+  }
 });
 
 function switchTab(n) {
