@@ -242,21 +242,28 @@ window._fbLoad = async function() {
   } catch(e) { console.log('Firebase load error:', e); return null; }
 };
 
-// Poll for changes every 10 seconds
+// Poll for changes every 8 seconds
 window._fbStartSync = function(onChange) {
   let lastHash = '';
   const poll = async () => {
     const data = await window._fbLoad();
     if(data) {
-      const hash = JSON.stringify({w:(data.weeks||[]).length, d:Object.keys(data.days||{}).length});
-      if(hash !== lastHash) {
+      // Use full data hash for accurate comparison
+      const hash = JSON.stringify({
+        w:(data.weeks||[]).length,
+        d:Object.keys(data.days||{}).length,
+        dm:Object.values(data.days||{}).reduce((s,d)=>s+(d.meals||[]).length,0)
+      });
+      if(lastHash === '') {
+        lastHash = hash; // set initial hash without triggering onChange
+      } else if(hash !== lastHash) {
         lastHash = hash;
         onChange(data);
       }
     }
   };
   poll(); // immediate first load
-  setInterval(poll, 10000); // then every 10 seconds
+  setInterval(poll, 8000); // then every 8 seconds
 };
 </script>
 </head>
@@ -954,9 +961,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(window._fbStartSync) {
     window._fbStartSync((remote) => {
       if(!remote) return;
-      const localStr = JSON.stringify({w:db.weeks.length, d:Object.keys(db.days).length});
-      const remoteStr = JSON.stringify({w:(remote.weeks||[]).length, d:Object.keys(remote.days||{}).length});
-      if(localStr === remoteStr) return; // no change
       db = {
         weeks:   remote.weeks   || [],
         days:    remote.days    || {},
